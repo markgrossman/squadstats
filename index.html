@@ -88,6 +88,20 @@
   .trend svg rect { fill:var(--fg); }
   .trend svg polyline { fill:none; stroke:var(--fg); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
   .trend em { font:700 .78rem var(--display); font-style:normal; letter-spacing:.04em; opacity:.8; }
+  .viz { background:var(--white); border-radius:28px; padding:16px 18px; margin-bottom:12px; }
+  .viz.dark { background:var(--ink); color:var(--white); }
+  .viz h2 { margin:0 0 10px; font:700 .9rem var(--display); text-transform:uppercase; letter-spacing:.06em; }
+  .heat { display:grid; grid-template-columns:76px repeat(30, 1fr); gap:2px; align-items:center; }
+  .heat .who { font:700 .85rem var(--display); text-transform:uppercase; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:6px; }
+  .heat i { aspect-ratio:1; border-radius:2px; background:var(--ink); }
+  .heat-key { display:flex; align-items:center; gap:3px; justify-content:flex-end; margin-top:8px; font:700 .72rem var(--display); text-transform:uppercase; opacity:.7; }
+  .heat-key i { width:10px; height:10px; border-radius:2px; background:var(--ink); }
+  .race svg { display:block; width:100%; height:auto; overflow:visible; }
+  .race polyline { fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+  .race .grid { stroke:rgba(255,255,255,.15); stroke-width:1; }
+  .race-legend { display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:10px; }
+  .race-legend span { font:700 .95rem var(--display); text-transform:uppercase; letter-spacing:.03em; }
+  .race-legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; }
   .note { padding:12px 14px; background:var(--tile); border-radius:12px; font-size:.82rem; }
 
   @media (min-width:560px) {
@@ -116,6 +130,8 @@
     <div class="sortrow" id="sort"></div>
   </div>
   <div class="summary" id="summary"></div>
+  <div class="viz" id="activity" hidden></div>
+  <div class="viz dark" id="race" hidden></div>
   <div class="list" id="list"></div>
 </main>
 <script>
@@ -258,6 +274,8 @@ function dailyGains(pts) {
   const last = [...days.values()];
   return last.slice(1).map((s, i) => ({
     t: Date.parse(s.t),
+    day: new Date(s.t).toLocaleDateString('en-CA'),
+    matches: s.matches - last[i].matches,
     wins: s.wins - last[i].wins,
     kills: s.kills - last[i].kills,
     deaths: s.deaths - last[i].deaths,
@@ -292,6 +310,55 @@ function trends(p) {
   </div>`;
 }
 
+const PLAYER_COLORS = ['#f6806a', '#f7c948', '#7470f4', '#5fc9e8', '#f58fc2'];
+const heatLevel = (v, max) => (v > 0 ? Math.ceil((v / max) * 4) : 0);
+const heatAlpha = [0.08, 0.3, 0.5, 0.75, 1];
+
+// One row per player, one square per day, shaded by matches played that day.
+function renderActivity() {
+  const el = document.getElementById('activity');
+  const keys = Array.from({ length: TREND_DAYS }, (_, i) =>
+    new Date(Date.now() - (TREND_DAYS - 1 - i) * DAY).toLocaleDateString('en-CA'));
+  const rows = state.data.players.map((p) => {
+    const pts = trendPoints(p.name);
+    const byDay = new Map((pts.length >= 2 ? dailyGains(pts) : []).map((d) => [d.day, d.matches]));
+    return { name: p.name, vals: keys.map((k) => byDay.get(k) ?? 0) };
+  });
+  const max = Math.max(...rows.flatMap((r) => r.vals), 0);
+  el.hidden = !max;
+  if (!max) return;
+  el.innerHTML = `<h2>Activity · last ${TREND_DAYS} days</h2><div class="heat">${rows.map((r) =>
+    `<span class="who" title="${esc(r.name)}">${esc(r.name)}</span>${r.vals.map((v, i) =>
+      `<i style="opacity:${heatAlpha[heatLevel(v, max)]}" title="${esc(r.name)} · ${keys[i]} · ${v} matches"></i>`).join('')}`).join('')}</div>
+    <div class="heat-key">Less ${heatAlpha.map((a) => `<i style="opacity:${a}"></i>`).join('')} More</div>`;
+}
+
+// Wins gained since the start of the window, one line per player.
+function renderRace() {
+  const el = document.getElementById('race');
+  const series = state.data.players.map((p, i) => {
+    const pts = trendPoints(p.name);
+    if (pts.length < 2) return null;
+    return { name: p.name, color: PLAYER_COLORS[i % PLAYER_COLORS.length],
+      pts: pts.map((s) => ({ t: Date.parse(s.t), v: s.wins - pts[0].wins })) };
+  }).filter(Boolean);
+  const top = Math.max(...series.flatMap((s) => s.pts.map((q) => q.v)), 0);
+  el.hidden = !top;
+  if (!top) return;
+  const t0 = Math.min(...series.map((s) => s.pts[0].t)), t1 = Math.max(...series.map((s) => s.pts.at(-1).t));
+  const W = 300, H = 120, span = t1 - t0 || 1;
+  const X = (t) => (((t - t0) / span) * W).toFixed(1), Y = (v) => (H - (v / top) * (H - 6) - 3).toFixed(1);
+  const lines = series.map((s) =>
+    `<polyline stroke="${s.color}" points="${s.pts.map((q) => `${X(q.t)},${Y(q.v)}`).join(' ')}"/>
+     <circle cx="${X(s.pts.at(-1).t)}" cy="${Y(s.pts.at(-1).v)}" r="3.5" fill="${s.color}"/>`).join('');
+  const legend = [...series].sort((a, b) => b.pts.at(-1).v - a.pts.at(-1).v).map((s) =>
+    `<span><i style="background:${s.color}"></i>${esc(s.name)} +${s.pts.at(-1).v}</span>`).join('');
+  el.innerHTML = `<h2>Wins race · since ${new Date(t0).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</h2>
+    <div class="race"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Wins gained per player">
+      <line class="grid" x1="0" x2="${W}" y1="${H - 3}" y2="${H - 3}"/><line class="grid" x1="0" x2="${W}" y1="3" y2="3"/>${lines}</svg></div>
+    <div class="race-legend">${legend}</div>`;
+}
+
 function render() {
   segment('window', WINDOWS, 'window');
   segment('mode', MODES, 'mode');
@@ -309,6 +376,8 @@ function render() {
     .sort((a, b) => (b.s?.[state.sort] ?? -1) - (a.s?.[state.sort] ?? -1));
 
   renderSummary(rows);
+  renderActivity();
+  renderRace();
   const list = document.getElementById('list');
   if (!rows.length) { list.innerHTML = '<div class="empty">No players yet. Add some to players.json.</div>'; return; }
 
