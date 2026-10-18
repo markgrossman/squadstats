@@ -53,6 +53,7 @@
   .tiles { display:grid; grid-template-columns:repeat(6, 1fr); gap:8px; }
   .tile { grid-column:span 2; }
   .tile:nth-child(n+4) { grid-column:span 3; }
+  .tiles.n4 .tile, .tiles.n4 .tile:nth-child(n+4) { grid-column:span 3; }
   .tile { background:var(--tile); border-radius:16px; padding:10px 4px 8px; text-align:center; }
   .tile b { display:block; font:800 1.55rem/1.05 var(--display); font-variant-numeric:tabular-nums; }
   .tile small { font:700 .8rem var(--display); text-transform:uppercase; letter-spacing:.06em; opacity:.75; }
@@ -84,6 +85,7 @@
   .trend small { display:block; font:700 .75rem var(--display); text-transform:uppercase; letter-spacing:.06em; opacity:.75; }
   .trend b { display:block; font:800 1.5rem/1.05 var(--display); }
   .trend svg { display:block; width:100%; height:36px; margin:6px 0 2px; overflow:visible; }
+  .trend svg rect { fill:var(--fg); }
   .trend svg polyline { fill:none; stroke:var(--fg); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
   .trend em { font:700 .78rem var(--display); font-style:normal; letter-spacing:.04em; opacity:.8; }
   .note { padding:12px 14px; background:var(--tile); border-radius:12px; font-size:.82rem; }
@@ -94,7 +96,8 @@
     .controls .seg { flex:1 1 auto; }
     .sortrow { flex:1 0 100%; margin:0; padding:0; }
     .tiles { grid-template-columns:repeat(5, 1fr); }
-    .tile, .tile:nth-child(n+4) { grid-column:auto; }
+    .tiles.n4 { grid-template-columns:repeat(4, 1fr); }
+    .tile, .tile:nth-child(n+4), .tiles.n4 .tile, .tiles.n4 .tile:nth-child(n+4) { grid-column:auto; }
     .player { padding:22px; }
     .head { gap:12px; }
     .rank { width:42px; height:42px; }
@@ -248,17 +251,45 @@ function modesTable(p) {
   return head + body;
 }
 
+// Per-day gains over the window: one entry per day with data, vs the previous day's last snapshot.
+function dailyGains(pts) {
+  const days = new Map();
+  pts.forEach((s) => days.set(new Date(s.t).toLocaleDateString('en-CA'), s));
+  const last = [...days.values()];
+  return last.slice(1).map((s, i) => ({
+    t: Date.parse(s.t),
+    wins: s.wins - last[i].wins,
+    kills: s.kills - last[i].kills,
+    deaths: s.deaths - last[i].deaths,
+  }));
+}
+
+function bars(vals) {
+  const max = Math.max(...vals, 1), w = 100 / vals.length;
+  const rects = vals.map((v, i) => {
+    const h = Math.max((v / max) * 34, v > 0 ? 1.5 : 0.6);
+    return `<rect x="${(i * w + w * 0.15).toFixed(2)}" y="${(36 - h).toFixed(2)}" width="${(w * 0.7).toFixed(2)}" height="${h.toFixed(2)}" rx="0.6"/>`;
+  });
+  return `<svg viewBox="0 0 100 36" preserveAspectRatio="none" aria-hidden="true">${rects.join('')}</svg>`;
+}
+
 function trends(p) {
   const pts = trendPoints(p.name);
-  if (pts.length < 2) return '<div class="note">Trends show up once there are a few more matches on record.</div>';
-  const times = pts.map((s) => Date.parse(s.t));
-  const series = [
-    ['Wins', pts.map((s) => s.wins), (v) => v.toLocaleString(), (d) => signed(d), 0],
-    ['Kills', pts.map((s) => s.kills), (v) => v.toLocaleString(), (d) => signed(d), 0],
-    ['K/D', pts.map((s) => (s.deaths ? s.kills / s.deaths : s.kills)), (v) => v.toFixed(2), (d) => signed(d, 2), 0.3],
-  ];
-  return `<div class="trends">${series.map(([label, vals, fmt, fmtD, minSpan]) => `
-    <div class="trend"><small>${label}</small><b>${fmt(vals.at(-1))}</b>${sparkline(vals, times, minSpan)}<em>${fmtD(vals.at(-1) - vals[0])}</em></div>`).join('')}</div>`;
+  const days = pts.length >= 2 ? dailyGains(pts) : [];
+  if (!days.length) return '<div class="note">Trends show up once there are a few more days on record.</div>';
+  const sum = (k) => days.reduce((n, d) => n + d[k], 0);
+  const kd = (k, d) => (d ? k / d : k);
+  const dayKd = days.filter((d) => d.deaths > 0);
+  const tile = (label, big, chart, sub) =>
+    `<div class="trend"><small>${label}</small><b>${big}</b>${chart}<em>${sub}</em></div>`;
+  const latest = pts.at(-1);
+  return `<div class="trends">
+    ${tile('Wins', sum('wins').toLocaleString(), bars(days.map((d) => d.wins)), 'per day')}
+    ${tile('Kills', sum('kills').toLocaleString(), bars(days.map((d) => d.kills)), 'per day')}
+    ${tile('K/D', kd(sum('kills'), sum('deaths')).toFixed(2),
+      dayKd.length > 1 ? sparkline(dayKd.map((d) => d.kills / d.deaths), dayKd.map((d) => d.t), 1) : '<svg></svg>',
+      'daily · ' + kd(latest.kills, latest.deaths).toFixed(2) + ' lifetime')}
+  </div>`;
 }
 
 function render() {
@@ -266,7 +297,10 @@ function render() {
   segment('mode', MODES, 'mode');
 
   const sort = document.getElementById('sort');
-  sort.innerHTML = '<span>Rank by</span>' + COLS.map(([k, label]) =>
+  // Level is the current season's battle pass level, so it means nothing for lifetime stats.
+  const cols = state.window === 'lifetime' ? COLS.filter(([k]) => k !== 'level') : COLS;
+  if (!cols.some(([k]) => k === state.sort)) state.sort = 'wins';
+  sort.innerHTML = '<span>Rank by</span>' + cols.map(([k, label]) =>
     `<button class="chip ${state.sort === k ? 'on' : ''}" data-k="${k}">${label}</button>`).join('');
   sort.onclick = (e) => { if (e.target.dataset?.k) { state.sort = e.target.dataset.k; render(); } };
 
@@ -278,9 +312,9 @@ function render() {
   const list = document.getElementById('list');
   if (!rows.length) { list.innerHTML = '<div class="empty">No players yet. Add some to players.json.</div>'; return; }
 
-  const [, sortLabel, sortFmt] = COLS.find(([k]) => k === state.sort);
+  const [, sortLabel, sortFmt] = cols.find(([k]) => k === state.sort);
   const max = Math.max(...rows.map(({ s }) => s?.[state.sort] ?? 0), 0);
-  const tiles = COLS.filter(([k]) => k !== state.sort);
+  const tiles = cols.filter(([k]) => k !== state.sort);
   const awards = computeAwards(rows);
 
   list.innerHTML = rows.map(({ p, s }, i) => {
@@ -303,13 +337,13 @@ function render() {
       </div>
       ${mine.length ? `<div class="awards">${shown.map((a) => `<span class="badge award">★ ${a}</span>`).join('')}${extra.length ? `<span class="badge award" title="${esc(extra.join(', '))}">+${extra.length}</span>` : ''}</div>` : ''}
       <div class="bar"><i style="width:${max && s ? Math.max(2, (s[state.sort] / max) * 100) : 0}%"></i></div>
-      <div class="tiles">${tiles.map(([k, label, fmt]) =>
+      <div class="tiles ${tiles.length === 4 ? 'n4' : ''}">${tiles.map(([k, label, fmt]) =>
         `<div class="tile"><b>${s ? fmt(s[k]) : '–'}</b><small>${label}</small></div>`).join('')}</div>
       <button class="more" aria-expanded="${open}">Details <i>▾</i></button>
       <div class="detail">
         <h3>By mode · ${WINDOWS[state.window]}</h3>
         ${modesTable(p)}
-        <h3>Last ${TREND_DAYS} days · lifetime</h3>
+        <h3>Last ${TREND_DAYS} days</h3>
         ${trends(p)}
       </div>
     </article>`;
