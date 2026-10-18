@@ -97,12 +97,16 @@
   .heat i { aspect-ratio:1; border-radius:2px; background:var(--ink); }
   .heat-key { display:flex; align-items:center; gap:3px; justify-content:flex-end; margin-top:8px; font:700 .72rem var(--display); text-transform:uppercase; opacity:.7; }
   .heat-key i { width:10px; height:10px; border-radius:2px; background:var(--ink); }
-  .race svg { display:block; width:100%; height:auto; overflow:visible; }
-  .race polyline { fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
-  .race .grid { stroke:rgba(255,255,255,.15); stroke-width:1; }
-  .race-legend { display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:10px; }
-  .race-legend span { font:700 .95rem var(--display); text-transform:uppercase; letter-spacing:.03em; }
-  .race-legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; }
+  .kpm { display:grid; grid-template-columns:auto 1fr auto auto; gap:8px 10px; align-items:center; }
+  .kpm-row { display:contents; }
+  .kpm .who { font:700 .95rem var(--display); text-transform:uppercase; max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .kpm-track { position:relative; height:14px; background:rgba(255,255,255,.12); border-radius:7px; }
+  .kpm-track i { position:absolute; inset:0 auto 0 0; border-radius:7px; }
+  .kpm-track u { position:absolute; top:-3px; bottom:-3px; width:2px; margin-left:-1px; background:var(--white); }
+  .kpm b { font:800 1.2rem var(--display); font-variant-numeric:tabular-nums; }
+  .kpm small { font:700 .75rem var(--display); text-transform:uppercase; opacity:.65; white-space:nowrap; }
+  .kpm-key { margin-top:10px; font:700 .72rem var(--display); text-transform:uppercase; opacity:.7; }
+  .kpm-key u { display:inline-block; width:2px; height:10px; background:var(--white); vertical-align:-1px; margin-right:4px; }
   .note { padding:12px 14px; background:var(--tile); border-radius:12px; font-size:.82rem; }
 
   @media (min-width:560px) {
@@ -133,7 +137,7 @@
   </div>
   <div class="summary" id="summary"></div>
   <div class="viz" id="activity" hidden></div>
-  <div class="viz dark" id="race" hidden></div>
+  <div class="viz dark" id="kpm" hidden></div>
   <div class="list" id="list"></div>
 </main>
 <script>
@@ -336,38 +340,34 @@ function renderActivity() {
     <div class="heat-key">Less ${heatAlpha.map((a) => `<i style="opacity:${a}"></i>`).join('')} More</div>`;
 }
 
-// Wins gained since the start of the window, one line per player.
-function renderRace() {
-  const el = document.getElementById('race');
-  const series = state.data.players.map((p, i) => {
+// Kills per match over the window, vs each player's lifetime average (the tick).
+function renderKpm() {
+  const el = document.getElementById('kpm');
+  const rows = state.data.players.map((p, i) => {
     const pts = trendPoints(p.name);
     if (pts.length < 2) return null;
-    return { name: p.name, color: PLAYER_COLORS[i % PLAYER_COLORS.length],
-      pts: pts.map((s) => ({ t: Date.parse(s.t), v: s.wins - pts[0].wins })) };
-  }).filter(Boolean);
-  const top = Math.max(...series.flatMap((s) => s.pts.map((q) => q.v)), 0);
-  el.hidden = !top;
-  if (!top) return;
-  const t0 = Math.min(...series.map((s) => s.pts[0].t)), t1 = Math.max(...series.map((s) => s.pts.at(-1).t));
-  const W = 300, H = 120, span = t1 - t0 || 1;
-  const X = (t) => (((t - t0) / span) * W).toFixed(1), Y = (v) => (H - (v / top) * (H - 6) - 3).toFixed(1);
-  const lines = series.map((s) =>
-    `<polyline stroke="${s.color}" points="${s.pts.map((q) => `${X(q.t)},${Y(q.v)}`).join(' ')}"/>
-     <circle cx="${X(s.pts.at(-1).t)}" cy="${Y(s.pts.at(-1).v)}" r="3.5" fill="${s.color}"/>`).join('');
-  const legend = [...series].sort((a, b) => b.pts.at(-1).v - a.pts.at(-1).v).map((s) =>
-    `<span><i style="background:${s.color}"></i>${esc(s.name)} +${s.pts.at(-1).v}</span>`).join('');
-  el.innerHTML = `<h2>Wins race · since ${new Date(t0).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</h2>
-    <div class="race"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Wins gained per player">
-      <line class="grid" x1="0" x2="${W}" y1="${H - 3}" y2="${H - 3}"/><line class="grid" x1="0" x2="${W}" y1="3" y2="3"/>${lines}</svg></div>
-    <div class="race-legend">${legend}</div>`;
+    const first = pts[0], last = pts.at(-1), matches = last.matches - first.matches;
+    if (matches <= 0) return null;
+    return { name: p.name, color: PLAYER_COLORS[i % PLAYER_COLORS.length], matches,
+      kpm: (last.kills - first.kills) / matches, life: last.kills / last.matches };
+  }).filter(Boolean).sort((a, b) => b.kpm - a.kpm);
+  el.hidden = !rows.length;
+  if (!rows.length) return;
+  const top = Math.max(...rows.flatMap((r) => [r.kpm, r.life]));
+  const pct = (v) => ((v / top) * 100).toFixed(1);
+  el.innerHTML = `<h2>Kills per match · last ${TREND_DAYS} days</h2><div class="kpm">${rows.map((r) =>
+    `<div class="kpm-row"><span class="who" title="${esc(r.name)}">${esc(r.name)}</span>
+      <div class="kpm-track"><i style="width:${pct(r.kpm)}%;background:${r.color}"></i><u style="left:${pct(r.life)}%" title="Lifetime ${r.life.toFixed(2)}"></u></div>
+      <b>${r.kpm.toFixed(2)}</b><small>${r.matches} games</small></div>`).join('')}</div>
+    <div class="kpm-key"><u></u> Lifetime average</div>`;
 }
 
 function render() {
   segment('view', VIEWS, 'view');
   const trendsView = state.view === 'trends';
   for (const id of ['window', 'mode', 'sort', 'summary', 'list']) document.getElementById(id).hidden = trendsView;
-  if (trendsView) { renderActivity(); renderRace(); return; }
-  document.getElementById('activity').hidden = document.getElementById('race').hidden = true;
+  if (trendsView) { renderActivity(); renderKpm(); return; }
+  document.getElementById('activity').hidden = document.getElementById('kpm').hidden = true;
   segment('window', WINDOWS, 'window');
   segment('mode', MODES, 'mode');
 
