@@ -15,6 +15,7 @@
     --display:'Barlow Condensed','Arial Narrow',Impact,sans-serif;
   }
   * { box-sizing: border-box; }
+  [hidden] { display:none !important; }
   body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.4 system-ui,sans-serif; -webkit-text-size-adjust:100%; }
   main { max-width:680px; margin:0 auto; padding:28px max(16px, env(safe-area-inset-right)) 56px max(16px, env(safe-area-inset-left)); }
   h1 { margin:0; font:800 3.4rem/.9 var(--display); text-transform:uppercase; letter-spacing:-.01em; }
@@ -125,6 +126,7 @@
   <h1>Squad Stats</h1>
   <div class="sub" id="updated">Loading…</div>
   <div class="controls">
+    <div class="seg" id="view"></div>
     <div class="seg" id="window"></div>
     <div class="seg" id="mode"></div>
     <div class="sortrow" id="sort"></div>
@@ -136,6 +138,7 @@
 </main>
 <script>
 const WINDOWS = { week: 'This week', season: 'Season', lifetime: 'Lifetime' };
+const VIEWS = { board: 'Leaderboard', trends: 'Trends' };
 const MODES = { overall: 'Overall', solo: 'Solo', duo: 'Duo', squad: 'Squad' };
 const COLS = [
   ['wins', 'Wins', (v) => v],
@@ -150,7 +153,7 @@ const MAX_AWARDS = 3;
 const DAY = 864e5;
 const TREND_DAYS = 30;
 
-const state = { window: 'season', mode: 'overall', sort: 'wins', data: null, history: {}, open: new Set() };
+const state = { view: 'board', window: 'season', mode: 'overall', sort: 'wins', data: null, history: {}, open: new Set() };
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const PLATFORM = { epic: 'Epic', psn: 'PlayStation', xbl: 'Xbox' };
@@ -360,6 +363,11 @@ function renderRace() {
 }
 
 function render() {
+  segment('view', VIEWS, 'view');
+  const trendsView = state.view === 'trends';
+  for (const id of ['window', 'mode', 'sort', 'summary', 'list']) document.getElementById(id).hidden = trendsView;
+  if (trendsView) { renderActivity(); renderRace(); return; }
+  document.getElementById('activity').hidden = document.getElementById('race').hidden = true;
   segment('window', WINDOWS, 'window');
   segment('mode', MODES, 'mode');
 
@@ -376,8 +384,6 @@ function render() {
     .sort((a, b) => (b.s?.[state.sort] ?? -1) - (a.s?.[state.sort] ?? -1));
 
   renderSummary(rows);
-  renderActivity();
-  renderRace();
   const list = document.getElementById('list');
   if (!rows.length) { list.innerHTML = '<div class="empty">No players yet. Add some to players.json.</div>'; return; }
 
