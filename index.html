@@ -91,6 +91,7 @@
   .trend em { font:700 .78rem var(--display); font-style:normal; letter-spacing:.04em; opacity:.8; }
   .viz { background:var(--white); border-radius:28px; padding:16px 18px; margin-bottom:12px; }
   .viz.dark { background:var(--ink); color:var(--white); }
+  .viz.forest { background:#244a3f; color:var(--white); }
   .viz h2 { margin:0 0 10px; font:700 .9rem var(--display); text-transform:uppercase; letter-spacing:.06em; }
   .heat { display:grid; grid-template-columns:76px repeat(30, 1fr); gap:2px; align-items:center; }
   .heat .who { font:700 .85rem var(--display); text-transform:uppercase; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:6px; }
@@ -113,6 +114,18 @@
   .scatter text.tick { font-size:8px; opacity:.55; }
   .scatter circle { stroke:var(--ink); stroke-width:1.5; }
   .viz .cap { margin-top:6px; font:700 .72rem var(--display); text-transform:uppercase; opacity:.6; }
+  .box svg { display:block; width:100%; height:auto; overflow:visible; }
+  .box text { font:700 9px var(--display); text-transform:uppercase; letter-spacing:.04em; fill:var(--white); }
+  .box text.tick { font-size:8px; opacity:.55; }
+  .box text.na { font-size:8px; opacity:.5; }
+  .box .ax { stroke:rgba(255,255,255,.15); stroke-width:1; }
+  .box .wh { stroke:var(--white); stroke-width:1.5; }
+  .box .med { stroke:var(--ink); stroke-width:2.5; }
+  .box .life { stroke:var(--white); stroke-width:2; stroke-dasharray:2 2; }
+  .howto { margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,.18); font-size:.82rem; line-height:1.4; opacity:.9; }
+  .howto p { margin:0 0 6px; }
+  .howto ul { margin:0 0 6px; padding-left:18px; }
+  .howto li { margin-bottom:2px; }
   .note { padding:12px 14px; background:var(--tile); border-radius:12px; font-size:.82rem; }
 
   @media (min-width:560px) {
@@ -144,6 +157,7 @@
   <div class="summary" id="summary"></div>
   <div class="viz" id="activity" hidden></div>
   <div class="viz dark" id="kpm" hidden></div>
+  <div class="viz forest" id="box" hidden></div>
   <div class="viz" id="scatter" hidden></div>
   <div class="list" id="list"></div>
 </main>
@@ -402,12 +416,59 @@ function renderScatter() {
   </svg></div><div class="cap">Up = better K/D · Right = wins more · Bigger dot = more matches</div>`;
 }
 
+// Spread of daily kills per match: the box is the middle half of days, the line a typical day.
+const quantile = (sorted, q) => {
+  const i = (sorted.length - 1) * q, lo = Math.floor(i);
+  return sorted[lo] + (sorted[Math.min(lo + 1, sorted.length - 1)] - sorted[lo]) * (i - lo);
+};
+const BOX_MIN_DAYS = 5, BOX_MIN_MATCHES = 3;
+
+function renderBox() {
+  const el = document.getElementById('box');
+  const rows = state.data.players.map((p, i) => {
+    const pts = trendPoints(p.name);
+    const days = (pts.length >= 2 ? dailyGains(pts) : []).filter((d) => d.matches >= BOX_MIN_MATCHES).map((d) => d.kills / d.matches).sort((a, b) => a - b);
+    const last = pts.at(-1);
+    const base = { name: p.name, color: PLAYER_COLORS[i % PLAYER_COLORS.length], n: days.length };
+    if (days.length < BOX_MIN_DAYS) return base;
+    return { ...base, min: days[0], q1: quantile(days, 0.25), med: quantile(days, 0.5), q3: quantile(days, 0.75), max: days.at(-1), life: last.kills / last.matches };
+  });
+  const ready = rows.filter((r) => r.med !== undefined);
+  el.hidden = !ready.length;
+  if (!ready.length) return;
+  ready.sort((a, b) => b.med - a.med);
+  const ordered = [...ready, ...rows.filter((r) => r.med === undefined)];
+  const top = Math.ceil(Math.max(...ready.flatMap((r) => [r.max, r.life])));
+  const W = 300, L = 78, R = 10, ROW = 26, T = 6, H = T + ordered.length * ROW + 16;
+  const X = (v) => L + (v / top) * (W - L - R);
+  const ticks = Array.from({ length: top + 1 }, (_, i) => i);
+  el.innerHTML = `<h2>Consistency · daily kills per match</h2><div class="box"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Spread of daily kills per match per player">
+    ${ticks.map((v) => `<line class="ax" x1="${X(v)}" x2="${X(v)}" y1="${T}" y2="${H - 14}"/><text class="tick" x="${X(v)}" y="${H - 3}" text-anchor="middle">${v}</text>`).join('')}
+    ${ordered.map((r, i) => {
+      const cy = T + i * ROW + ROW / 2;
+      const name = `<text x="0" y="${cy + 3}">${esc(r.name.length > 12 ? r.name.slice(0, 11) + '…' : r.name)}</text>`;
+      if (r.med === undefined) return `${name}<text class="na" x="${L + 4}" y="${cy + 3}">${r.n} of ${BOX_MIN_DAYS} days needed</text>`;
+      return `${name}<g><title>${esc(r.name)} · median ${r.med.toFixed(2)} · middle half ${r.q1.toFixed(2)}–${r.q3.toFixed(2)} · range ${r.min.toFixed(2)}–${r.max.toFixed(2)} · ${r.n} days</title>
+        <line class="wh" x1="${X(r.min)}" x2="${X(r.max)}" y1="${cy}" y2="${cy}"/>
+        <line class="wh" x1="${X(r.min)}" x2="${X(r.min)}" y1="${cy - 4}" y2="${cy + 4}"/><line class="wh" x1="${X(r.max)}" x2="${X(r.max)}" y1="${cy - 4}" y2="${cy + 4}"/>
+        <rect x="${X(r.q1)}" y="${cy - 8}" width="${Math.max(X(r.q3) - X(r.q1), 2)}" height="16" rx="3" fill="${r.color}"/>
+        <line class="med" x1="${X(r.med)}" x2="${X(r.med)}" y1="${cy - 8}" y2="${cy + 8}"/>
+        <line class="life" x1="${X(r.life)}" x2="${X(r.life)}" y1="${cy - 11}" y2="${cy + 11}"/></g>`;
+    }).join('')}
+  </svg></div><div class="howto"><p>Each row shows how a player's individual days stack up, so you can tell steady from streaky.</p><ul>
+    <li><b>Colored box</b> – their middle half of days. A short box means consistent, a wide one means it swings.</li>
+    <li><b>Black line</b> – a typical day (the median).</li>
+    <li><b>Whiskers</b> – their worst and best day.</li>
+    <li><b>Dashed line</b> – their lifetime average. Box sitting right of it means they're playing better than usual lately.</li></ul>
+    <p>Only days with ${BOX_MIN_MATCHES}+ matches count, and a player needs ${BOX_MIN_DAYS} such days to appear.</p></div>`;
+}
+
 function render() {
   segment('view', VIEWS, 'view');
   const trendsView = state.view === 'trends';
   for (const id of ['window', 'mode', 'sort', 'summary', 'list']) document.getElementById(id).hidden = trendsView;
-  if (trendsView) { renderActivity(); renderKpm(); renderScatter(); return; }
-  document.getElementById('activity').hidden = document.getElementById('kpm').hidden = document.getElementById('scatter').hidden = true;
+  if (trendsView) { renderActivity(); renderKpm(); renderBox(); renderScatter(); return; }
+  document.getElementById('activity').hidden = document.getElementById('kpm').hidden = document.getElementById('scatter').hidden = document.getElementById('box').hidden = true;
   segment('window', WINDOWS, 'window');
   segment('mode', MODES, 'mode');
 
