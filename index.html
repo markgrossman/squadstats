@@ -91,6 +91,7 @@
   .trend em { font:700 .78rem var(--display); font-style:normal; letter-spacing:.04em; opacity:.8; }
   .viz { background:var(--white); border-radius:28px; padding:16px 18px; margin-bottom:12px; }
   .viz.dark { background:var(--ink); color:var(--white); }
+  .viz.forest { background:#244a3f; color:var(--white); }
   .viz h2 { margin:0 0 10px; font:700 .9rem var(--display); text-transform:uppercase; letter-spacing:.06em; }
   .heat { display:grid; grid-template-columns:76px repeat(30, 1fr); gap:2px; align-items:center; }
   .heat .who { font:700 .85rem var(--display); text-transform:uppercase; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:6px; }
@@ -152,7 +153,7 @@
   <div class="summary" id="summary"></div>
   <div class="viz" id="activity" hidden></div>
   <div class="viz dark" id="kpm" hidden></div>
-  <div class="viz dark" id="box" hidden></div>
+  <div class="viz forest" id="box" hidden></div>
   <div class="viz" id="scatter" hidden></div>
   <div class="list" id="list"></div>
 </main>
