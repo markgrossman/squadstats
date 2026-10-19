@@ -122,6 +122,10 @@
   .box .wh { stroke:var(--white); stroke-width:1.5; }
   .box .med { stroke:var(--ink); stroke-width:2.5; }
   .box .life { stroke:var(--white); stroke-width:2; stroke-dasharray:2 2; }
+  .howto { margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,.18); font-size:.82rem; line-height:1.4; opacity:.9; }
+  .howto p { margin:0 0 6px; }
+  .howto ul { margin:0 0 6px; padding-left:18px; }
+  .howto li { margin-bottom:2px; }
   .note { padding:12px 14px; background:var(--tile); border-radius:12px; font-size:.82rem; }
 
   @media (min-width:560px) {
@@ -451,7 +455,12 @@ function renderBox() {
         <line class="med" x1="${X(r.med)}" x2="${X(r.med)}" y1="${cy - 8}" y2="${cy + 8}"/>
         <line class="life" x1="${X(r.life)}" x2="${X(r.life)}" y1="${cy - 11}" y2="${cy + 11}"/></g>`;
     }).join('')}
-  </svg></div><div class="cap">Box = middle half of days · Black line = typical day · Dashed = lifetime average · Days with ${BOX_MIN_MATCHES}+ matches</div>`;
+  </svg></div><div class="howto"><p>Each row shows how a player's individual days stack up, so you can tell steady from streaky.</p><ul>
+    <li><b>Colored box</b> – their middle half of days. A short box means consistent, a wide one means it swings.</li>
+    <li><b>Black line</b> – a typical day (the median).</li>
+    <li><b>Whiskers</b> – their worst and best day.</li>
+    <li><b>Dashed line</b> – their lifetime average. Box sitting right of it means they're playing better than usual lately.</li></ul>
+    <p>Only days with ${BOX_MIN_MATCHES}+ matches count, and a player needs ${BOX_MIN_DAYS} such days to appear.</p></div>`;
 }
 
 function render() {
