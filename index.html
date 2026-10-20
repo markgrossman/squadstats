@@ -19,6 +19,8 @@
   body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.4 system-ui,sans-serif; -webkit-text-size-adjust:100%; }
   main { max-width:680px; margin:0 auto; padding:28px max(16px, env(safe-area-inset-right)) 56px max(16px, env(safe-area-inset-left)); }
   h1 { margin:0; font:800 3.4rem/.9 var(--display); text-transform:uppercase; letter-spacing:-.01em; }
+  .subs { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 22px; }
+  .subs .sub { margin:0; }
   .sub { display:inline-block; margin:12px 0 22px; padding:3px 12px; background:var(--white); border-radius:999px; font-size:.78rem; font-weight:600; }
 
   .controls { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
@@ -147,7 +149,7 @@
 <body>
 <main>
   <h1>Squad Stats</h1>
-  <div class="sub" id="updated">Loading…</div>
+  <div class="subs"><div class="sub" id="updated">Loading…</div><div class="sub" id="season-end" hidden></div></div>
   <div class="controls">
     <div class="seg" id="view"></div>
     <div class="seg" id="window"></div>
@@ -163,6 +165,8 @@
 </main>
 <script>
 const WINDOWS = { week: 'This week', season: 'Season', lifetime: 'Lifetime' };
+// The stats API doesn't report this; update it when a new season starts.
+const SEASON_END = '2026-10-31';
 const VIEWS = { board: 'Leaderboard', trends: 'Trends' };
 const MODES = { overall: 'Overall', solo: 'Solo', duo: 'Duo', squad: 'Squad' };
 const COLS = [
@@ -177,6 +181,16 @@ const AWARDS = [['wins', 'Most wins'], ['kills', 'Most kills'], ['kd', 'Best K/D
 const MAX_AWARDS = 3;
 const DAY = 864e5;
 const TREND_DAYS = 30;
+
+function showSeasonEnd() {
+  const el = document.getElementById('season-end');
+  const end = new Date(SEASON_END + 'T00:00:00'), today = new Date(new Date().toDateString());
+  const days = Math.round((end - today) / DAY);
+  if (days < 0) return;
+  const date = end.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  el.textContent = `Season ends ${date} · ${days === 0 ? 'today' : days === 1 ? '1 day left' : days + ' days left'}`;
+  el.hidden = false;
+}
 
 const state = { view: 'board', window: 'season', mode: 'overall', sort: 'wins', data: null, history: {}, open: new Set() };
 
@@ -545,6 +559,7 @@ Promise.all([
   document.getElementById('updated').textContent = data.updatedAt
     ? 'Last updated: ' + new Date(data.updatedAt).toLocaleString()
     : 'Waiting for the first update run.';
+  showSeasonEnd();
   render();
 }).catch(() => { document.getElementById('updated').textContent = 'Could not load stats.'; });
 </script>
