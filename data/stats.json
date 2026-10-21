@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T08:56:40.581Z",
+  "updatedAt": "2026-10-21T10:21:58.584Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -98,12 +98,12 @@
         "overall": {
           "wins": 1535,
           "kills": 32526,
-          "deaths": 14596,
-          "matches": 16131,
+          "deaths": 14597,
+          "matches": 16132,
           "kd": 2.228,
-          "winRate": 9.516,
-          "minutesPlayed": 165462,
-          "score": 3829971
+          "winRate": 9.515,
+          "minutesPlayed": 165497,
+          "score": 3830226
         },
         "solo": {
           "wins": 16,
@@ -140,12 +140,12 @@
         "overall": {
           "wins": 55,
           "kills": 1219,
-          "deaths": 353,
-          "matches": 408,
-          "kd": 3.453,
-          "winRate": 13.48,
-          "minutesPlayed": 5158,
-          "score": 148470
+          "deaths": 354,
+          "matches": 409,
+          "kd": 3.444,
+          "winRate": 13.447,
+          "minutesPlayed": 5193,
+          "score": 148725
         },
         "solo": {
           "wins": 3,
