@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-22T23:43:29.604Z",
+  "updatedAt": "2026-10-23T02:12:49.018Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -186,13 +186,13 @@
       "lifetime": {
         "overall": {
           "wins": 1564,
-          "kills": 29639,
-          "deaths": 13675,
-          "matches": 15239,
+          "kills": 29645,
+          "deaths": 13679,
+          "matches": 15243,
           "kd": 2.167,
-          "winRate": 10.263,
-          "minutesPlayed": 133409,
-          "score": 3439471
+          "winRate": 10.26,
+          "minutesPlayed": 133434,
+          "score": 3440079
         },
         "solo": {
           "wins": 35,
@@ -216,25 +216,25 @@
         },
         "squad": {
           "wins": 1036,
-          "kills": 17558,
-          "deaths": 7125,
-          "matches": 8161,
+          "kills": 17564,
+          "deaths": 7127,
+          "matches": 8163,
           "kd": 2.464,
-          "winRate": 12.695,
-          "minutesPlayed": 77679,
-          "score": 1998173
+          "winRate": 12.691,
+          "minutesPlayed": 77694,
+          "score": 1998628
         }
       },
       "season": {
         "overall": {
           "wins": 78,
-          "kills": 1355,
-          "deaths": 491,
-          "matches": 569,
-          "kd": 2.76,
-          "winRate": 13.708,
-          "minutesPlayed": 6897,
-          "score": 195648
+          "kills": 1361,
+          "deaths": 495,
+          "matches": 573,
+          "kd": 2.749,
+          "winRate": 13.613,
+          "minutesPlayed": 6922,
+          "score": 196256
         },
         "solo": {
           "wins": 10,
@@ -258,13 +258,13 @@
         },
         "squad": {
           "wins": 42,
-          "kills": 713,
-          "deaths": 196,
-          "matches": 238,
-          "kd": 3.638,
-          "winRate": 17.647,
-          "minutesPlayed": 3066,
-          "score": 88361
+          "kills": 719,
+          "deaths": 198,
+          "matches": 240,
+          "kd": 3.631,
+          "winRate": 17.5,
+          "minutesPlayed": 3081,
+          "score": 88816
         }
       }
     },
