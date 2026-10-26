@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T06:30:09.382Z",
+  "updatedAt": "2026-10-26T23:14:26.446Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -182,17 +182,17 @@
     {
       "name": "Kaiser2007",
       "accountType": "epic",
-      "level": 390,
+      "level": 391,
       "lifetime": {
         "overall": {
           "wins": 1568,
           "kills": 29704,
-          "deaths": 13691,
-          "matches": 15259,
-          "kd": 2.17,
-          "winRate": 10.276,
-          "minutesPlayed": 133647,
-          "score": 3446801
+          "deaths": 13693,
+          "matches": 15261,
+          "kd": 2.169,
+          "winRate": 10.275,
+          "minutesPlayed": 133684,
+          "score": 3447179
         },
         "solo": {
           "wins": 36,
@@ -229,12 +229,12 @@
         "overall": {
           "wins": 82,
           "kills": 1420,
-          "deaths": 507,
-          "matches": 589,
-          "kd": 2.801,
-          "winRate": 13.922,
-          "minutesPlayed": 7135,
-          "score": 202978
+          "deaths": 509,
+          "matches": 591,
+          "kd": 2.79,
+          "winRate": 13.875,
+          "minutesPlayed": 7172,
+          "score": 203356
         },
         "solo": {
           "wins": 11,
