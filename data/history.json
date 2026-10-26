@@ -1617,6 +1617,34 @@
      "deaths": 7127
     }
    }
+  },
+  {
+   "t": "2026-10-26T01:23:47.983Z",
+   "matches": 15254,
+   "wins": 1567,
+   "kills": 29687,
+   "deaths": 13687,
+   "minutesPlayed": 133592,
+   "modes": {
+    "solo": {
+     "matches": 1268,
+     "wins": 36,
+     "kills": 1706,
+     "deaths": 1232
+    },
+    "duo": {
+     "matches": 4328,
+     "wins": 224,
+     "kills": 6384,
+     "deaths": 4104
+    },
+    "squad": {
+     "matches": 8167,
+     "wins": 1037,
+     "kills": 17566,
+     "deaths": 7130
+    }
+   }
   }
  ],
  "Chopstix_02": [
