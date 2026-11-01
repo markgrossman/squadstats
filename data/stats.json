@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T20:38:50.987Z",
+  "updatedAt": "2026-11-01T23:59:42.949Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -88,32 +88,33 @@
           "minutesPlayed": 1332,
           "score": 40658
         }
-      }
+      },
+      "error": "404 the requested profile didnt play any match yet"
     },
     {
       "name": "Chopstix_02",
       "accountType": "psn",
-      "level": 354,
+      "level": 8,
       "lifetime": {
         "overall": {
-          "wins": 1539,
-          "kills": 32687,
-          "deaths": 14628,
-          "matches": 16167,
+          "wins": 1540,
+          "kills": 32701,
+          "deaths": 14634,
+          "matches": 16174,
           "kd": 2.235,
-          "winRate": 9.519,
-          "minutesPlayed": 165976,
-          "score": 3843098
+          "winRate": 9.521,
+          "minutesPlayed": 166044,
+          "score": 3845238
         },
         "solo": {
-          "wins": 16,
-          "kills": 915,
-          "deaths": 880,
-          "matches": 896,
-          "kd": 1.04,
-          "winRate": 1.786,
-          "minutesPlayed": 4911,
-          "score": 128264
+          "wins": 17,
+          "kills": 929,
+          "deaths": 886,
+          "matches": 903,
+          "kd": 1.049,
+          "winRate": 1.883,
+          "minutesPlayed": 4979,
+          "score": 130404
         },
         "duo": {
           "wins": 214,
@@ -138,44 +139,24 @@
       },
       "season": {
         "overall": {
-          "wins": 59,
-          "kills": 1380,
-          "deaths": 385,
-          "matches": 444,
-          "kd": 3.584,
-          "winRate": 13.288,
-          "minutesPlayed": 5672,
-          "score": 161597
+          "wins": 1,
+          "kills": 24,
+          "deaths": 10,
+          "matches": 11,
+          "kd": 2.4,
+          "winRate": 9.091,
+          "minutesPlayed": 99,
+          "score": 3171
         },
         "solo": {
-          "wins": 3,
-          "kills": 134,
-          "deaths": 89,
-          "matches": 92,
-          "kd": 1.506,
-          "winRate": 3.261,
-          "minutesPlayed": 1072,
-          "score": 29782
-        },
-        "duo": {
-          "wins": 9,
-          "kills": 397,
-          "deaths": 123,
-          "matches": 132,
-          "kd": 3.228,
-          "winRate": 6.818,
-          "minutesPlayed": 1557,
-          "score": 44319
-        },
-        "squad": {
-          "wins": 46,
-          "kills": 822,
-          "deaths": 154,
-          "matches": 200,
-          "kd": 5.338,
-          "winRate": 23,
-          "minutesPlayed": 2727,
-          "score": 82408
+          "wins": 1,
+          "kills": 24,
+          "deaths": 10,
+          "matches": 11,
+          "kd": 2.4,
+          "winRate": 9.091,
+          "minutesPlayed": 99,
+          "score": 3171
         }
       }
     },
@@ -266,7 +247,8 @@
           "minutesPlayed": 3405,
           "score": 98315
         }
-      }
+      },
+      "error": "404 the requested profile didnt play any match yet"
     },
     {
       "name": "SirChawlz",
@@ -345,96 +327,13 @@
           "minutesPlayed": 928,
           "score": 27149
         }
-      }
+      },
+      "error": "404 the requested profile didnt play any match yet"
     },
     {
-      "name": "CoolStoryDawg",
+      "name": "cool_story_dawg",
       "accountType": "psn",
-      "level": 125,
-      "lifetime": {
-        "overall": {
-          "wins": 495,
-          "kills": 9608,
-          "deaths": 7088,
-          "matches": 7583,
-          "kd": 1.356,
-          "winRate": 6.528,
-          "minutesPlayed": 43520,
-          "score": 1121933
-        },
-        "solo": {
-          "wins": 23,
-          "kills": 1756,
-          "deaths": 1270,
-          "matches": 1293,
-          "kd": 1.383,
-          "winRate": 1.779,
-          "minutesPlayed": 6553,
-          "score": 161358
-        },
-        "duo": {
-          "wins": 89,
-          "kills": 2431,
-          "deaths": 1739,
-          "matches": 1828,
-          "kd": 1.398,
-          "winRate": 4.869,
-          "minutesPlayed": 11674,
-          "score": 295853
-        },
-        "squad": {
-          "wins": 306,
-          "kills": 4452,
-          "deaths": 3626,
-          "matches": 3932,
-          "kd": 1.228,
-          "winRate": 7.782,
-          "minutesPlayed": 20997,
-          "score": 542021
-        }
-      },
-      "season": {
-        "overall": {
-          "wins": 25,
-          "kills": 247,
-          "deaths": 125,
-          "matches": 150,
-          "kd": 1.976,
-          "winRate": 16.667,
-          "minutesPlayed": 1771,
-          "score": 50835
-        },
-        "solo": {
-          "wins": 0,
-          "kills": 10,
-          "deaths": 6,
-          "matches": 6,
-          "kd": 1.667,
-          "winRate": 0,
-          "minutesPlayed": 47,
-          "score": 1202
-        },
-        "duo": {
-          "wins": 12,
-          "kills": 122,
-          "deaths": 58,
-          "matches": 70,
-          "kd": 2.103,
-          "winRate": 17.143,
-          "minutesPlayed": 811,
-          "score": 24035
-        },
-        "squad": {
-          "wins": 13,
-          "kills": 115,
-          "deaths": 61,
-          "matches": 74,
-          "kd": 1.885,
-          "winRate": 17.568,
-          "minutesPlayed": 913,
-          "score": 25598
-        }
-      }
+      "error": "404 the requested profile didnt play any match yet"
     }
   ]
 }
