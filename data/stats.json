@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T12:55:46.234Z",
+  "updatedAt": "2026-11-02T22:35:09.062Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -251,7 +251,7 @@
     {
       "name": "SirChawlz",
       "accountType": "epic",
-      "level": 89,
+      "level": 1,
       "lifetime": {
         "overall": {
           "wins": 114,
@@ -296,42 +296,135 @@
       },
       "season": {
         "overall": {
-          "wins": 18,
-          "kills": 185,
-          "deaths": 67,
-          "matches": 85,
-          "kd": 2.761,
-          "winRate": 21.176,
-          "minutesPlayed": 1209,
-          "score": 35220
+          "wins": 0,
+          "kills": 0,
+          "deaths": 0,
+          "matches": 0,
+          "kd": 0,
+          "winRate": 0,
+          "minutesPlayed": 0,
+          "score": 0
+        },
+        "solo": {
+          "wins": 0,
+          "kills": 0,
+          "deaths": 0,
+          "matches": 0,
+          "kd": 0,
+          "winRate": 0,
+          "minutesPlayed": 0,
+          "score": 0
         },
         "duo": {
-          "wins": 2,
-          "kills": 49,
-          "deaths": 20,
-          "matches": 22,
-          "kd": 2.45,
-          "winRate": 9.091,
-          "minutesPlayed": 281,
-          "score": 8071
+          "wins": 0,
+          "kills": 0,
+          "deaths": 0,
+          "matches": 0,
+          "kd": 0,
+          "winRate": 0,
+          "minutesPlayed": 0,
+          "score": 0
         },
         "squad": {
-          "wins": 16,
-          "kills": 136,
-          "deaths": 47,
-          "matches": 63,
-          "kd": 2.894,
-          "winRate": 25.397,
-          "minutesPlayed": 928,
-          "score": 27149
+          "wins": 0,
+          "kills": 0,
+          "deaths": 0,
+          "matches": 0,
+          "kd": 0,
+          "winRate": 0,
+          "minutesPlayed": 0,
+          "score": 0
         }
-      },
-      "error": "404 the requested profile didnt play any match yet"
+      }
     },
     {
-      "name": "cool_story_dawg",
+      "name": "CoolStoryDawg",
       "accountType": "psn",
-      "error": "404 the requested profile didnt play any match yet"
+      "level": 1,
+      "lifetime": {
+        "overall": {
+          "wins": 495,
+          "kills": 9608,
+          "deaths": 7088,
+          "matches": 7583,
+          "kd": 1.356,
+          "winRate": 6.528,
+          "minutesPlayed": 43520,
+          "score": 1121933
+        },
+        "solo": {
+          "wins": 23,
+          "kills": 1756,
+          "deaths": 1270,
+          "matches": 1293,
+          "kd": 1.383,
+          "winRate": 1.779,
+          "minutesPlayed": 6553,
+          "score": 161358
+        },
+        "duo": {
+          "wins": 89,
+          "kills": 2431,
+          "deaths": 1739,
+          "matches": 1828,
+          "kd": 1.398,
+          "winRate": 4.869,
+          "minutesPlayed": 11674,
+          "score": 295853
+        },
+        "squad": {
+          "wins": 306,
+          "kills": 4452,
+          "deaths": 3626,
+          "matches": 3932,
+          "kd": 1.228,
+          "winRate": 7.782,
+          "minutesPlayed": 20997,
+          "score": 542021
+        }
+      },
+      "season": {
+        "overall": {
+          "wins": 0,
+          "kills": 0,
+          "deaths": 0,
+          "matches": 0,
+          "kd": 0,
+          "winRate": 0,
+          "minutesPlayed": 0,
+          "score": 0
+        },
+        "solo": {
+          "wins": 0,
+          "kills": 0,
+          "deaths": 0,
+          "matches": 0,
+          "kd": 0,
+          "winRate": 0,
+          "minutesPlayed": 0,
+          "score": 0
+        },
+        "duo": {
+          "wins": 0,
+          "kills": 0,
+          "deaths": 0,
+          "matches": 0,
+          "kd": 0,
+          "winRate": 0,
+          "minutesPlayed": 0,
+          "score": 0
+        },
+        "squad": {
+          "wins": 0,
+          "kills": 0,
+          "deaths": 0,
+          "matches": 0,
+          "kd": 0,
+          "winRate": 0,
+          "minutesPlayed": 0,
+          "score": 0
+        }
+      }
     }
   ]
 }
