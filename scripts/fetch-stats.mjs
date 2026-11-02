@@ -29,9 +29,16 @@ async function fetchWindow(player, timeWindow) {
   url.searchParams.set('timeWindow', timeWindow);
   const res = await fetch(url, { headers: { Authorization: KEY } });
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(`${res.status} ${body.error ?? res.statusText}`);
+  if (!res.ok) {
+    const err = new Error(`${res.status} ${body.error ?? res.statusText}`);
+    err.status = res.status;
+    throw err;
+  }
   return body.data;
 }
+
+const ZERO = { wins: 0, kills: 0, deaths: 0, matches: 0, kd: 0, winRate: 0, minutesPlayed: 0, score: 0 };
+const zeroModes = () => ({ overall: { ...ZERO }, solo: { ...ZERO }, duo: { ...ZERO }, squad: { ...ZERO } });
 
 // Keep only the fields the site uses, so diffs stay small.
 const pick = (m) =>
@@ -64,14 +71,18 @@ for (const player of players) {
   try {
     const lifetime = await fetchWindow(player, 'lifetime');
     await sleep(500);
-    const season = await fetchWindow(player, 'season');
+    // The API 404s for a player with no matches in the current season; that's zeros, not an error.
+    const season = await fetchWindow(player, 'season').catch((err) => {
+      if (err.status === 404) return null;
+      throw err;
+    });
     await sleep(500);
     const entry = {
       name: lifetime.account.name,
       accountType: player.accountType ?? 'epic',
       level: lifetime.battlePass?.level ?? null,
       lifetime: modes(lifetime),
-      season: modes(season),
+      season: season ? modes(season) : zeroModes(),
     };
     out.push(entry);
 
