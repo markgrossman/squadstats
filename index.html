@@ -64,6 +64,14 @@
 
   .summary { background:var(--white); border-radius:28px; padding:16px 18px; margin-bottom:12px; }
   .summary h2 { margin:0 0 8px; font:700 .9rem var(--display); text-transform:uppercase; letter-spacing:.06em; }
+  .goal + .goal { margin-top:14px; }
+  .goal-top { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .goal-top b { font:800 1.05rem var(--display); text-transform:uppercase; }
+  .goal-top span { font:800 1.5rem/1 var(--display); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .goal-bar { display:flex; height:16px; margin:8px 0 6px; border-radius:8px; overflow:hidden; background:rgba(0,0,0,.1); }
+  .goal-bar i { display:block; height:100%; border-right:2px solid var(--white); }
+  .goal-bar i:last-child { border-right:0; }
+  .goal small { font:700 .75rem var(--display); text-transform:uppercase; letter-spacing:.04em; opacity:.65; }
   .totals { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; text-align:center; }
   .totals b { display:block; font:800 2.2rem/.95 var(--display); font-variant-numeric:tabular-nums; }
   .totals small { font:700 .8rem var(--display); text-transform:uppercase; letter-spacing:.06em; opacity:.6; }
@@ -156,6 +164,7 @@
     <div class="seg" id="mode"></div>
     <div class="sortrow" id="sort"></div>
   </div>
+  <div class="summary" id="goals" hidden></div>
   <div class="summary" id="summary"></div>
   <div class="viz" id="activity" hidden></div>
   <div class="viz dark" id="kpm" hidden></div>
@@ -166,7 +175,7 @@
 <script>
 const WINDOWS = { week: 'This week', season: 'Season', lifetime: 'Lifetime' };
 // The stats API doesn't report this; update it when a new season starts.
-const SEASON_END = '2026-10-31';
+const SEASON_END = '2026-12-05';
 const VIEWS = { board: 'Leaderboard', trends: 'Trends' };
 const MODES = { overall: 'Overall', solo: 'Solo', duo: 'Duo', squad: 'Squad' };
 const COLS = [
@@ -192,7 +201,7 @@ function showSeasonEnd() {
   el.hidden = false;
 }
 
-const state = { view: 'board', window: 'season', mode: 'overall', sort: 'wins', data: null, history: {}, open: new Set() };
+const state = { goals: [], view: 'board', window: 'season', mode: 'overall', sort: 'wins', data: null, history: {}, open: new Set() };
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const PLATFORM = { epic: 'Epic', psn: 'PlayStation', xbl: 'Xbox' };
@@ -477,10 +486,32 @@ function renderBox() {
     <p>Only days with ${BOX_MIN_MATCHES}+ matches count, and a player needs ${BOX_MIN_DAYS} such days to appear.</p></div>`;
 }
 
+// Squad goals: season totals summed across everyone, from goals.json.
+function renderGoals() {
+  const el = document.getElementById('goals');
+  el.hidden = !state.goals.length;
+  if (el.hidden) return;
+  const end = new Date(SEASON_END + 'T00:00:00'), today = new Date(new Date().toDateString());
+  const daysLeft = Math.round((end - today) / DAY);
+  el.innerHTML = '<h2>Squad goals</h2>' + state.goals.map((g) => {
+    const parts = state.data.players.map((p, i) => ({ name: p.name, v: p.season?.[g.mode ?? 'overall']?.[g.metric] ?? 0, color: PLAYER_COLORS[i % PLAYER_COLORS.length] }));
+    const total = parts.reduce((a, x) => a + x.v, 0);
+    const pct = Math.min(100, (total / g.target) * 100);
+    const note = total >= g.target ? 'Goal reached 🎉'
+      : `${(g.target - total).toLocaleString()} to go${daysLeft > 0 ? ` · ${daysLeft} days left` : ''}`;
+    return `<div class="goal">
+      <div class="goal-top"><b>${esc(g.label)}</b><span>${total.toLocaleString()} / ${g.target.toLocaleString()}</span></div>
+      <div class="goal-bar" role="img" aria-label="${pct.toFixed(0)}% of goal">${parts.filter((x) => x.v > 0).map((x) =>
+        `<i style="width:${(x.v / g.target) * 100}%;background:${x.color}" title="${esc(x.name)}: ${x.v}"></i>`).join('')}</div>
+      <small>${note}</small></div>`;
+  }).join('');
+}
+
 function render() {
   segment('view', VIEWS, 'view');
   const trendsView = state.view === 'trends';
   for (const id of ['window', 'mode', 'sort', 'summary', 'list']) document.getElementById(id).hidden = trendsView;
+  if (trendsView) document.getElementById('goals').hidden = true;
   if (trendsView) { renderActivity(); renderKpm(); renderBox(); renderScatter(); return; }
   document.getElementById('activity').hidden = document.getElementById('kpm').hidden = document.getElementById('scatter').hidden = document.getElementById('box').hidden = true;
   segment('window', WINDOWS, 'window');
@@ -498,6 +529,7 @@ function render() {
     .map((p) => ({ p, s: statsFor(p) }))
     .sort((a, b) => (b.s?.[state.sort] ?? -1) - (a.s?.[state.sort] ?? -1));
 
+  renderGoals();
   renderSummary(rows);
   const list = document.getElementById('list');
   if (!rows.length) { list.innerHTML = '<div class="empty">No players yet. Add some to players.json.</div>'; return; }
@@ -553,8 +585,10 @@ document.getElementById('list').addEventListener('click', (e) => {
 Promise.all([
   fetch('data/stats.json').then((r) => r.json()),
   fetch('data/history.json').then((r) => r.json()).catch(() => ({})),
-]).then(([data, history]) => {
+  fetch('goals.json').then((r) => r.json()).catch(() => []),
+]).then(([data, history, goals]) => {
   state.data = data;
+  state.goals = goals;
   state.history = history;
   document.getElementById('updated').textContent = data.updatedAt
     ? 'Last updated: ' + new Date(data.updatedAt).toLocaleString()

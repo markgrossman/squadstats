@@ -1,0 +1,4 @@
+[
+  { "label": "Squad wins this season", "metric": "wins", "mode": "overall", "target": 100 },
+  { "label": "Squad kills this season", "metric": "kills", "mode": "overall", "target": 2000 }
+]
