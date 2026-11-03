@@ -487,14 +487,15 @@ function renderBox() {
 }
 
 // Squad goals: season totals summed across everyone, from goals.json.
-function renderGoals() {
+function renderGoals(rows) {
   const el = document.getElementById('goals');
   el.hidden = !state.goals.length;
   if (el.hidden) return;
   const end = new Date(SEASON_END + 'T00:00:00'), today = new Date(new Date().toDateString());
   const daysLeft = Math.round((end - today) / DAY);
   el.innerHTML = '<h2>Squad goals</h2>' + state.goals.map((g) => {
-    const parts = state.data.players.map((p, i) => ({ name: p.name, v: p.season?.[g.mode ?? 'overall']?.[g.metric] ?? 0, color: PLAYER_COLORS[i % PLAYER_COLORS.length] }));
+    // Colour by current rank so segments match the player cards below.
+    const parts = rows.map(({ p }, i) => ({ name: p.name, v: p.season?.[g.mode ?? 'overall']?.[g.metric] ?? 0, color: PLAYER_COLORS[i < 3 ? i : 3 + (i - 3) % 2] }));
     const total = parts.reduce((a, x) => a + x.v, 0);
     const pct = Math.min(100, (total / g.target) * 100);
     const note = total >= g.target ? 'Goal reached 🎉'
@@ -529,7 +530,7 @@ function render() {
     .map((p) => ({ p, s: statsFor(p) }))
     .sort((a, b) => (b.s?.[state.sort] ?? -1) - (a.s?.[state.sort] ?? -1));
 
-  renderGoals();
+  renderGoals(rows);
   renderSummary(rows);
   const list = document.getElementById('list');
   if (!rows.length) { list.innerHTML = '<div class="empty">No players yet. Add some to players.json.</div>'; return; }
