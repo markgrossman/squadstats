@@ -703,6 +703,34 @@
      "deaths": 295
     }
    }
+  },
+  {
+   "t": "2026-11-04T11:39:54.917Z",
+   "matches": 1138,
+   "wins": 302,
+   "kills": 3683,
+   "deaths": 836,
+   "minutesPlayed": 12946,
+   "modes": {
+    "solo": {
+     "matches": 337,
+     "wins": 44,
+     "kills": 1675,
+     "deaths": 293
+    },
+    "duo": {
+     "matches": 227,
+     "wins": 54,
+     "kills": 513,
+     "deaths": 173
+    },
+    "squad": {
+     "matches": 444,
+     "wins": 146,
+     "kills": 848,
+     "deaths": 298
+    }
+   }
   }
  ],
  "Kaiser2007": [
@@ -3615,6 +3643,34 @@
      "deaths": 7677
     }
    }
+  },
+  {
+   "t": "2026-11-04T11:39:57.121Z",
+   "matches": 16206,
+   "wins": 1546,
+   "kills": 32809,
+   "deaths": 14660,
+   "minutesPlayed": 166385,
+   "modes": {
+    "solo": {
+     "matches": 908,
+     "wins": 17,
+     "kills": 938,
+     "deaths": 891
+    },
+    "duo": {
+     "matches": 4416,
+     "wins": 217,
+     "kills": 6058,
+     "deaths": 4199
+    },
+    "squad": {
+     "matches": 8828,
+     "wins": 1148,
+     "kills": 17314,
+     "deaths": 7680
+    }
+   }
   }
  ],
  "SirChawlz": [
@@ -4121,6 +4177,34 @@
      "wins": 308,
      "kills": 4465,
      "deaths": 3628
+    }
+   }
+  },
+  {
+   "t": "2026-11-04T11:40:02.966Z",
+   "matches": 7590,
+   "wins": 497,
+   "kills": 9625,
+   "deaths": 7093,
+   "minutesPlayed": 43616,
+   "modes": {
+    "solo": {
+     "matches": 1293,
+     "wins": 23,
+     "kills": 1756,
+     "deaths": 1270
+    },
+    "duo": {
+     "matches": 1828,
+     "wins": 89,
+     "kills": 2431,
+     "deaths": 1739
+    },
+    "squad": {
+     "matches": 3939,
+     "wins": 308,
+     "kills": 4469,
+     "deaths": 3631
     }
    }
   }
