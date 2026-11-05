@@ -759,6 +759,34 @@
      "deaths": 298
     }
    }
+  },
+  {
+   "t": "2026-11-05T06:30:16.695Z",
+   "matches": 1151,
+   "wins": 303,
+   "kills": 3721,
+   "deaths": 848,
+   "minutesPlayed": 13063,
+   "modes": {
+    "solo": {
+     "matches": 343,
+     "wins": 44,
+     "kills": 1692,
+     "deaths": 299
+    },
+    "duo": {
+     "matches": 230,
+     "wins": 54,
+     "kills": 520,
+     "deaths": 176
+    },
+    "squad": {
+     "matches": 448,
+     "wins": 147,
+     "kills": 862,
+     "deaths": 301
+    }
+   }
   }
  ],
  "Kaiser2007": [
@@ -2317,6 +2345,34 @@
      "deaths": 7162
     }
    }
+  },
+  {
+   "t": "2026-11-05T06:30:21.128Z",
+   "matches": 15329,
+   "wins": 1580,
+   "kills": 29895,
+   "deaths": 13749,
+   "minutesPlayed": 134455,
+   "modes": {
+    "solo": {
+     "matches": 1279,
+     "wins": 36,
+     "kills": 1725,
+     "deaths": 1243
+    },
+    "duo": {
+     "matches": 4342,
+     "wins": 224,
+     "kills": 6410,
+     "deaths": 4118
+    },
+    "squad": {
+     "matches": 8215,
+     "wins": 1050,
+     "kills": 17729,
+     "deaths": 7165
+    }
+   }
   }
  ],
  "Chopstix_02": [
@@ -3727,6 +3783,34 @@
      "deaths": 7680
     }
    }
+  },
+  {
+   "t": "2026-11-05T06:30:18.852Z",
+   "matches": 16210,
+   "wins": 1547,
+   "kills": 32819,
+   "deaths": 14663,
+   "minutesPlayed": 166429,
+   "modes": {
+    "solo": {
+     "matches": 908,
+     "wins": 17,
+     "kills": 938,
+     "deaths": 891
+    },
+    "duo": {
+     "matches": 4416,
+     "wins": 217,
+     "kills": 6058,
+     "deaths": 4199
+    },
+    "squad": {
+     "matches": 8832,
+     "wins": 1149,
+     "kills": 17324,
+     "deaths": 7683
+    }
+   }
   }
  ],
  "SirChawlz": [
@@ -4249,6 +4333,34 @@
      "wins": 23,
      "kills": 1756,
      "deaths": 1270
+    },
+    "duo": {
+     "matches": 1828,
+     "wins": 89,
+     "kills": 2431,
+     "deaths": 1739
+    },
+    "squad": {
+     "matches": 3939,
+     "wins": 308,
+     "kills": 4469,
+     "deaths": 3631
+    }
+   }
+  },
+  {
+   "t": "2026-11-05T06:30:24.941Z",
+   "matches": 7591,
+   "wins": 497,
+   "kills": 9627,
+   "deaths": 7094,
+   "minutesPlayed": 43633,
+   "modes": {
+    "solo": {
+     "matches": 1294,
+     "wins": 23,
+     "kills": 1758,
+     "deaths": 1271
     },
     "duo": {
      "matches": 1828,
