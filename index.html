@@ -68,6 +68,9 @@
   .goal-top { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
   .goal-top b { font:800 1.05rem var(--display); text-transform:uppercase; }
   .goal-top span { font:800 1.5rem/1 var(--display); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .goal-track { position:relative; margin:8px 0 6px; }
+  .goal-track .goal-bar { margin:0; }
+  .goal-pace { position:absolute; top:-4px; bottom:-4px; width:3px; margin-left:-1.5px; background:var(--ink); border-radius:2px; }
   .goal-bar { display:flex; height:16px; margin:8px 0 6px; border-radius:8px; overflow:hidden; background:rgba(0,0,0,.1); }
   .goal-bar i { display:block; height:100%; border-right:2px solid var(--white); }
   .goal-bar i:last-child { border-right:0; }
@@ -176,6 +179,7 @@
 const WINDOWS = { week: 'This week', season: 'Season', lifetime: 'Lifetime' };
 // The stats API doesn't report this; update it when a new season starts.
 const SEASON_END = '2026-12-05';
+const SEASON_START = '2026-11-01';
 const VIEWS = { board: 'Leaderboard', trends: 'Trends' };
 const MODES = { overall: 'Overall', solo: 'Solo', duo: 'Duo', squad: 'Squad' };
 const COLS = [
@@ -493,17 +497,26 @@ function renderGoals(rows) {
   if (el.hidden) return;
   const end = new Date(SEASON_END + 'T00:00:00'), today = new Date(new Date().toDateString());
   const daysLeft = Math.round((end - today) / DAY);
+  const start = new Date(SEASON_START + 'T00:00:00');
+  // Fraction of the season elapsed, counting today as in progress.
+  const elapsed = Math.min(1, Math.max(0, (today - start) / DAY + 1) / Math.max(1, Math.round((end - start) / DAY) + 1));
+  const tracking = daysLeft >= 0 && end > start;
   el.innerHTML = '<h2>Squad goals</h2>' + state.goals.map((g) => {
     // Colour by current rank so segments match the player cards below.
     const parts = rows.map(({ p }, i) => ({ name: p.name, v: p.season?.[g.mode ?? 'overall']?.[g.metric] ?? 0, color: PLAYER_COLORS[i < 3 ? i : 3 + (i - 3) % 2] }));
     const total = parts.reduce((a, x) => a + x.v, 0);
     const pct = Math.min(100, (total / g.target) * 100);
+    const expected = tracking ? Math.round(g.target * elapsed) : null;
+    const diff = expected === null ? 0 : total - expected;
+    const pace = expected === null || total >= g.target ? ''
+      : ` · ${Math.abs(diff) < 1 ? 'on pace' : diff > 0 ? diff.toLocaleString() + ' ahead' : Math.abs(diff).toLocaleString() + ' behind'} (target ${expected.toLocaleString()})`;
     const note = total >= g.target ? 'Goal reached 🎉'
-      : `${(g.target - total).toLocaleString()} to go${daysLeft > 0 ? ` · ${daysLeft} days left` : ''}`;
+      : `${(g.target - total).toLocaleString()} to go${daysLeft > 0 ? ` · ${daysLeft} days left` : ''}${pace}`;
     return `<div class="goal">
       <div class="goal-top"><b>${esc(g.label)}</b><span>${total.toLocaleString()} / ${g.target.toLocaleString()}</span></div>
-      <div class="goal-bar" role="img" aria-label="${pct.toFixed(0)}% of goal">${parts.filter((x) => x.v > 0).map((x) =>
+      <div class="goal-track"><div class="goal-bar" role="img" aria-label="${pct.toFixed(0)}% of goal">${parts.filter((x) => x.v > 0).map((x) =>
         `<i style="width:${(x.v / g.target) * 100}%;background:${x.color}" title="${esc(x.name)}: ${x.v}"></i>`).join('')}</div>
+      ${expected === null || total >= g.target ? '' : `<u class="goal-pace" style="left:${elapsed * 100}%" title="Where you should be today: ${expected}"></u>`}</div>
       <small>${note}</small></div>`;
   }).join('');
 }
