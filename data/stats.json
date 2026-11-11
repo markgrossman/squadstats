@@ -1,30 +1,30 @@
 {
-  "updatedAt": "2026-11-10T06:28:55.117Z",
+  "updatedAt": "2026-11-11T01:14:22.481Z",
   "players": [
     {
       "name": "Quietkoala5",
       "accountType": "epic",
-      "level": 38,
+      "level": 41,
       "lifetime": {
         "overall": {
           "wins": 310,
-          "kills": 3761,
-          "deaths": 868,
-          "matches": 1178,
-          "kd": 4.333,
-          "winRate": 26.316,
-          "minutesPlayed": 13380,
-          "score": 471984
+          "kills": 3783,
+          "deaths": 871,
+          "matches": 1181,
+          "kd": 4.343,
+          "winRate": 26.249,
+          "minutesPlayed": 13416,
+          "score": 473497
         },
         "solo": {
           "wins": 44,
-          "kills": 1692,
-          "deaths": 299,
-          "matches": 343,
-          "kd": 5.659,
-          "winRate": 12.828,
-          "minutesPlayed": 3599,
-          "score": 125662
+          "kills": 1714,
+          "deaths": 302,
+          "matches": 346,
+          "kd": 5.675,
+          "winRate": 12.717,
+          "minutesPlayed": 3635,
+          "score": 127175
         },
         "duo": {
           "wins": 56,
@@ -50,23 +50,23 @@
       "season": {
         "overall": {
           "wins": 15,
-          "kills": 128,
-          "deaths": 53,
-          "matches": 68,
-          "kd": 2.415,
-          "winRate": 22.059,
-          "minutesPlayed": 716,
-          "score": 24258
+          "kills": 150,
+          "deaths": 56,
+          "matches": 71,
+          "kd": 2.679,
+          "winRate": 21.127,
+          "minutesPlayed": 752,
+          "score": 25771
         },
         "solo": {
           "wins": 0,
-          "kills": 24,
-          "deaths": 7,
-          "matches": 7,
-          "kd": 3.429,
+          "kills": 46,
+          "deaths": 10,
+          "matches": 10,
+          "kd": 4.6,
           "winRate": 0,
-          "minutesPlayed": 55,
-          "score": 1872
+          "minutesPlayed": 91,
+          "score": 3385
         },
         "duo": {
           "wins": 5,
