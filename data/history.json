@@ -4819,6 +4819,34 @@
      "deaths": 7714
     }
    }
+  },
+  {
+   "t": "2026-11-14T07:55:35.319Z",
+   "matches": 16281,
+   "wins": 1561,
+   "kills": 33053,
+   "deaths": 14720,
+   "minutesPlayed": 167250,
+   "modes": {
+    "solo": {
+     "matches": 915,
+     "wins": 17,
+     "kills": 952,
+     "deaths": 898
+    },
+    "duo": {
+     "matches": 4438,
+     "wins": 220,
+     "kills": 6129,
+     "deaths": 4218
+    },
+    "squad": {
+     "matches": 8874,
+     "wins": 1160,
+     "kills": 17473,
+     "deaths": 7714
+    }
+   }
   }
  ],
  "SirChawlz": [
@@ -5599,6 +5627,34 @@
      "wins": 92,
      "kills": 2465,
      "deaths": 1752
+    },
+    "squad": {
+     "matches": 3958,
+     "wins": 313,
+     "kills": 4498,
+     "deaths": 3645
+    }
+   }
+  },
+  {
+   "t": "2026-11-14T07:55:41.369Z",
+   "matches": 7629,
+   "wins": 505,
+   "kills": 9694,
+   "deaths": 7124,
+   "minutesPlayed": 44065,
+   "modes": {
+    "solo": {
+     "matches": 1294,
+     "wins": 23,
+     "kills": 1758,
+     "deaths": 1271
+    },
+    "duo": {
+     "matches": 1847,
+     "wins": 92,
+     "kills": 2469,
+     "deaths": 1755
     },
     "squad": {
      "matches": 3958,
