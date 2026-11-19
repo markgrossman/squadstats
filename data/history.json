@@ -1151,6 +1151,34 @@
      "deaths": 333
     }
    }
+  },
+  {
+   "t": "2026-11-19T06:40:13.468Z",
+   "matches": 1211,
+   "wins": 316,
+   "kills": 3861,
+   "deaths": 895,
+   "minutesPlayed": 13758,
+   "modes": {
+    "solo": {
+     "matches": 349,
+     "wins": 45,
+     "kills": 1728,
+     "deaths": 304
+    },
+    "duo": {
+     "matches": 241,
+     "wins": 56,
+     "kills": 539,
+     "deaths": 185
+    },
+    "squad": {
+     "matches": 491,
+     "wins": 157,
+     "kills": 947,
+     "deaths": 334
+    }
+   }
   }
  ],
  "Kaiser2007": [
@@ -3297,6 +3325,34 @@
      "deaths": 7220
     }
    }
+  },
+  {
+   "t": "2026-11-19T06:40:18.286Z",
+   "matches": 15444,
+   "wins": 1602,
+   "kills": 30193,
+   "deaths": 13842,
+   "minutesPlayed": 135840,
+   "modes": {
+    "solo": {
+     "matches": 1280,
+     "wins": 36,
+     "kills": 1727,
+     "deaths": 1244
+    },
+    "duo": {
+     "matches": 4384,
+     "wins": 230,
+     "kills": 6505,
+     "deaths": 4154
+    },
+    "squad": {
+     "matches": 8287,
+     "wins": 1066,
+     "kills": 17930,
+     "deaths": 7221
+    }
+   }
   }
  ],
  "Chopstix_02": [
@@ -5321,6 +5377,34 @@
      "wins": 1164,
      "kills": 17525,
      "deaths": 7723
+    }
+   }
+  },
+  {
+   "t": "2026-11-19T06:40:16.027Z",
+   "matches": 16304,
+   "wins": 1567,
+   "kills": 33135,
+   "deaths": 14737,
+   "minutesPlayed": 167543,
+   "modes": {
+    "solo": {
+     "matches": 915,
+     "wins": 17,
+     "kills": 952,
+     "deaths": 898
+    },
+    "duo": {
+     "matches": 4447,
+     "wins": 222,
+     "kills": 6152,
+     "deaths": 4225
+    },
+    "squad": {
+     "matches": 8888,
+     "wins": 1164,
+     "kills": 17532,
+     "deaths": 7724
     }
    }
   }
