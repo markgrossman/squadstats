@@ -4,7 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Squad Stats</title>
+<meta name="description" content="Fortnite squad leaderboard: wins, kills, K/D, daily records and streaks, updated automatically.">
+<meta name="theme-color" content="#b8cfc3">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Squad Stats">
+<meta property="og:title" content="Squad Stats">
+<meta property="og:description" content="Fortnite squad leaderboard: wins, kills, K/D, daily records and streaks, updated automatically.">
+<meta property="og:url" content="https://squadstats.net/">
+<meta property="og:image" content="https://squadstats.net/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Squad Stats leaderboard">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
@@ -36,11 +49,11 @@
   .list { display:flex; flex-direction:column; gap:12px; }
   .player { --bg-c:var(--ink); --fg:var(--white); --tile:rgba(255,255,255,.1); --track:rgba(255,255,255,.18); --fill:var(--yellow); --badge:rgba(255,255,255,.14);
             background:var(--bg-c); color:var(--fg); border-radius:28px; padding:18px; }
-  .player.r1 { --bg-c:var(--coral); --fg:var(--ink); --tile:rgba(255,255,255,.35); --track:rgba(0,0,0,.14); --fill:var(--ink); --badge:rgba(255,255,255,.4); }
-  .player.r2 { --bg-c:var(--yellow); --fg:var(--ink); --tile:rgba(255,255,255,.4); --track:rgba(0,0,0,.14); --fill:var(--ink); --badge:rgba(255,255,255,.45); }
-  .player.r3 { --bg-c:var(--purple); --fg:var(--white); --tile:rgba(255,255,255,.18); --track:rgba(255,255,255,.25); --fill:var(--white); --badge:rgba(255,255,255,.2); }
-  .player.r4 { --bg-c:var(--sky); --fg:var(--ink); --tile:rgba(255,255,255,.4); --track:rgba(0,0,0,.14); --fill:var(--ink); --badge:rgba(255,255,255,.45); }
-  .player.r5 { --bg-c:var(--pink); --fg:var(--ink); --tile:rgba(255,255,255,.4); --track:rgba(0,0,0,.14); --fill:var(--ink); --badge:rgba(255,255,255,.45); }
+  .player.c0 { --bg-c:var(--coral); --fg:var(--ink); --tile:rgba(255,255,255,.35); --track:rgba(0,0,0,.14); --fill:var(--ink); --badge:rgba(255,255,255,.4); }
+  .player.c1 { --bg-c:var(--yellow); --fg:var(--ink); --tile:rgba(255,255,255,.4); --track:rgba(0,0,0,.14); --fill:var(--ink); --badge:rgba(255,255,255,.45); }
+  .player.c2 { --bg-c:var(--purple); --fg:var(--white); --tile:rgba(255,255,255,.18); --track:rgba(255,255,255,.25); --fill:var(--white); --badge:rgba(255,255,255,.2); }
+  .player.c3 { --bg-c:var(--sky); --fg:var(--ink); --tile:rgba(255,255,255,.4); --track:rgba(0,0,0,.14); --fill:var(--ink); --badge:rgba(255,255,255,.45); }
+  .player.c4 { --bg-c:var(--pink); --fg:var(--ink); --tile:rgba(255,255,255,.4); --track:rgba(0,0,0,.14); --fill:var(--ink); --badge:rgba(255,255,255,.45); }
   .head { display:flex; align-items:center; gap:10px; }
   .rank { flex:none; width:36px; height:36px; border-radius:50%; display:grid; place-items:center; font:800 1.4rem var(--display); background:var(--fg); color:var(--bg-c); }
   .who { flex:1; min-width:0; }
@@ -61,6 +74,28 @@
   .tile b { display:block; font:800 1.55rem/1.05 var(--display); font-variant-numeric:tabular-nums; }
   .tile small { font:700 .8rem var(--display); text-transform:uppercase; letter-spacing:.06em; opacity:.75; }
   .empty { padding:32px; text-align:center; font-weight:600; }
+  .player.idle { display:flex; align-items:center; gap:10px; padding:10px 16px; border-radius:20px; opacity:.8; }
+  .player.idle .name { font-size:1.2rem; }
+  .player.idle .badge { flex:none; }
+  .idle-msg { margin-left:auto; text-align:right; font:700 .85rem var(--display); text-transform:uppercase; letter-spacing:.05em; opacity:.8; }
+
+  #tip { position:fixed; z-index:10; max-width:240px; padding:6px 10px; background:var(--ink); color:var(--white); border-radius:10px; font:700 .85rem/1.25 var(--display); letter-spacing:.03em; pointer-events:none; box-shadow:0 2px 10px rgba(0,0,0,.3); }
+  [data-tip] { cursor:help; -webkit-tap-highlight-color:transparent; }
+  .goal-pace::before { content:''; position:absolute; inset:-4px -10px; }
+
+  .rec { display:flex; align-items:center; gap:14px; padding:9px 0; }
+  .rec + .rec { border-top:1px solid rgba(0,0,0,.1); }
+  .rec-v { flex:none; min-width:64px; font:800 2.2rem/.9 var(--display); font-variant-numeric:tabular-nums; }
+  .rec-l { min-width:0; }
+  .rec-l b { display:block; font:800 1.05rem/1.1 var(--display); text-transform:uppercase; }
+  .rec-l span { display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px; margin-top:2px; font:700 .85rem var(--display); text-transform:uppercase; letter-spacing:.04em; opacity:.75; }
+  .dot { flex:none; width:10px; height:10px; border-radius:50%; border:1.5px solid var(--ink); }
+  .badge.live { background:var(--ink); color:var(--white); font-size:.65rem; padding:0 8px; }
+  .viz h3 { margin:14px 0 6px; font:700 .8rem var(--display); text-transform:uppercase; letter-spacing:.06em; opacity:.65; }
+  .rolls { display:flex; flex-wrap:wrap; gap:6px; }
+  .rolls .badge { display:inline-flex; align-items:center; gap:6px; background:rgba(0,0,0,.08); padding:3px 11px; font-size:.75rem; }
+  .viz .fine { margin:10px 0 0; font-size:.78rem; opacity:.6; }
+  .scatter text, .box text { pointer-events:none; }
 
   .summary { background:var(--white); border-radius:28px; padding:16px 18px; margin-bottom:12px; }
   .summary h2 { margin:0 0 8px; font:700 .9rem var(--display); text-transform:uppercase; letter-spacing:.06em; }
@@ -169,6 +204,7 @@
   </div>
   <div class="summary" id="goals" hidden></div>
   <div class="summary" id="summary"></div>
+  <div class="viz" id="records" hidden></div>
   <div class="viz" id="activity" hidden></div>
   <div class="viz dark" id="kpm" hidden></div>
   <div class="viz forest" id="box" hidden></div>
@@ -177,9 +213,9 @@
 </main>
 <script>
 const WINDOWS = { week: 'This week', season: 'Season', lifetime: 'Lifetime' };
-// The stats API doesn't report this; update it when a new season starts.
-const SEASON_END = '2026-12-05';
-const SEASON_START = '2026-11-01';
+// The stats API doesn't report season dates; they live in season.json.
+const SEASON = { start: null, end: null };
+const seasonDate = (s) => { const d = s ? new Date(s + 'T00:00:00') : null; return d && !isNaN(d) ? d : null; };
 const VIEWS = { board: 'Leaderboard', trends: 'Trends' };
 const MODES = { overall: 'Overall', solo: 'Solo', duo: 'Duo', squad: 'Squad' };
 const COLS = [
@@ -197,12 +233,31 @@ const TREND_DAYS = 30;
 
 function showSeasonEnd() {
   const el = document.getElementById('season-end');
-  const end = new Date(SEASON_END + 'T00:00:00'), today = new Date(new Date().toDateString());
+  const end = SEASON.end, today = new Date(new Date().toDateString());
+  if (!end) return;
   const days = Math.round((end - today) / DAY);
-  if (days < 0) return;
   const date = end.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-  el.textContent = `Season ends ${date} · ${days === 0 ? 'today' : days === 1 ? '1 day left' : days + ' days left'}`;
+  el.textContent = days < 0 ? `Season ended ${date}`
+    : `Season ends ${date} · ${days === 0 ? 'today' : days === 1 ? '1 day left' : days + ' days left'}`;
   el.hidden = false;
+}
+
+function ago(ms) {
+  const m = Math.round(ms / 6e4);
+  if (m < 1) return 'just now';
+  if (m < 60) return m + ' min ago';
+  const h = Math.round(m / 60);
+  return h < 48 ? h + 'h ago' : Math.round(h / 24) + 'd ago';
+}
+
+// updatedAt = numbers last changed; checkedAt = last successful check (recorded at most every 30 min).
+function showFreshness() {
+  const d = state.data, el = document.getElementById('updated');
+  if (!d.updatedAt) { el.textContent = 'Waiting for the first update run.'; return; }
+  const checked = Date.parse(d.checkedAt ?? d.updatedAt), changed = Date.parse(d.updatedAt);
+  const age = Date.now() - checked;
+  el.textContent = `${age < 60 * 6e4 ? 'Checked within the hour' : 'Checked ' + ago(age)} · New stats ${ago(Date.now() - changed)}`;
+  el.dataset.tip = `Last checked ${new Date(checked).toLocaleString()}. Numbers last changed ${new Date(changed).toLocaleString()}.`;
 }
 
 const state = { goals: [], view: 'board', window: 'season', mode: 'overall', sort: 'wins', data: null, history: {}, open: new Set() };
@@ -383,8 +438,8 @@ function renderActivity() {
   el.hidden = !max;
   if (!max) return;
   el.innerHTML = `<h2>Activity · last ${TREND_DAYS} days</h2><div class="heat">${rows.map((r) =>
-    `<span class="who" title="${esc(r.name)}">${esc(r.name)}</span>${r.vals.map((v, i) =>
-      `<i style="opacity:${heatAlpha[heatLevel(v, max)]}" title="${esc(r.name)} · ${keys[i]} · ${v} matches"></i>`).join('')}`).join('')}</div>
+    `<span class="who" data-tip="${esc(r.name)}">${esc(r.name)}</span>${r.vals.map((v, i) =>
+      `<i style="opacity:${heatAlpha[heatLevel(v, max)]}" data-tip="${esc(r.name)} · ${keys[i]} · ${v} matches"></i>`).join('')}`).join('')}</div>
     <div class="heat-key">Less ${heatAlpha.map((a) => `<i style="opacity:${a}"></i>`).join('')} More</div>`;
 }
 
@@ -404,8 +459,8 @@ function renderKpm() {
   const top = Math.max(...rows.flatMap((r) => [r.kpm, r.life]));
   const pct = (v) => ((v / top) * 100).toFixed(1);
   el.innerHTML = `<h2>Kills per match · last ${TREND_DAYS} days</h2><div class="kpm">${rows.map((r) =>
-    `<div class="kpm-row"><span class="who" title="${esc(r.name)}">${esc(r.name)}</span>
-      <div class="kpm-track"><i style="width:${pct(r.kpm)}%;background:${r.color}"></i><u style="left:${pct(r.life)}%" title="Lifetime ${r.life.toFixed(2)}"></u></div>
+    `<div class="kpm-row"><span class="who" data-tip="${esc(r.name)}">${esc(r.name)}</span>
+      <div class="kpm-track" data-tip="${esc(r.name)} · ${r.kpm.toFixed(2)} lately · ${r.life.toFixed(2)} lifetime"><i style="width:${pct(r.kpm)}%;background:${r.color}"></i><u style="left:${pct(r.life)}%"></u></div>
       <b>${r.kpm.toFixed(2)}</b><small>${r.matches} games</small></div>`).join('')}</div>
     <div class="kpm-key"><u></u> Lifetime average</div>`;
 }
@@ -437,7 +492,7 @@ function renderScatter() {
       const tx = crowded ? cx : left ? cx - r - 3 : cx + r + 3;
       const ty = crowded ? cy + r + 10 : cy + 3;
       const anchor = crowded ? 'middle' : left ? 'end' : 'start';
-      return `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}" fill="${d.color}" fill-opacity=".85"><title>${esc(d.name)} · ${d.x.toFixed(1)}% · ${d.y.toFixed(2)} K/D · ${d.m} matches</title></circle>
+      return `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}" fill="${d.color}" fill-opacity=".85" data-tip="${esc(d.name)} · ${d.x.toFixed(1)}% · ${d.y.toFixed(2)} K/D · ${d.m} matches"/>
       <text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${anchor}">${esc(d.name)}</text>`;
     }).join('')}
   </svg></div><div class="cap">Up = better K/D · Right = wins more · Bigger dot = more matches</div>`;
@@ -475,7 +530,7 @@ function renderBox() {
       const cy = T + i * ROW + ROW / 2;
       const name = `<text x="0" y="${cy + 3}">${esc(r.name.length > 12 ? r.name.slice(0, 11) + '…' : r.name)}</text>`;
       if (r.med === undefined) return `${name}<text class="na" x="${L + 4}" y="${cy + 3}">${r.n} of ${BOX_MIN_DAYS} days needed</text>`;
-      return `${name}<g><title>${esc(r.name)} · median ${r.med.toFixed(2)} · middle half ${r.q1.toFixed(2)}–${r.q3.toFixed(2)} · range ${r.min.toFixed(2)}–${r.max.toFixed(2)} · ${r.n} days</title>
+      return `${name}<g data-tip="${esc(r.name)} · median ${r.med.toFixed(2)} · middle half ${r.q1.toFixed(2)}–${r.q3.toFixed(2)} · range ${r.min.toFixed(2)}–${r.max.toFixed(2)} · ${r.n} days"><rect x="${L}" y="${cy - 12}" width="${W - L - R}" height="24" fill="transparent"/>
         <line class="wh" x1="${X(r.min)}" x2="${X(r.max)}" y1="${cy}" y2="${cy}"/>
         <line class="wh" x1="${X(r.min)}" x2="${X(r.min)}" y1="${cy - 4}" y2="${cy + 4}"/><line class="wh" x1="${X(r.max)}" x2="${X(r.max)}" y1="${cy - 4}" y2="${cy + 4}"/>
         <rect x="${X(r.q1)}" y="${cy - 8}" width="${Math.max(X(r.q3) - X(r.q1), 2)}" height="16" rx="3" fill="${r.color}"/>
@@ -495,15 +550,14 @@ function renderGoals(rows) {
   const el = document.getElementById('goals');
   el.hidden = !state.goals.length;
   if (el.hidden) return;
-  const end = new Date(SEASON_END + 'T00:00:00'), today = new Date(new Date().toDateString());
-  const daysLeft = Math.round((end - today) / DAY);
-  const start = new Date(SEASON_START + 'T00:00:00');
+  const end = SEASON.end, start = SEASON.start, today = new Date(new Date().toDateString());
+  const daysLeft = end ? Math.round((end - today) / DAY) : -1;
   // Fraction of the season elapsed, counting today as in progress.
-  const elapsed = Math.min(1, Math.max(0, (today - start) / DAY + 1) / Math.max(1, Math.round((end - start) / DAY) + 1));
-  const tracking = daysLeft >= 0 && end > start;
+  const elapsed = end && start ? Math.min(1, Math.max(0, (today - start) / DAY + 1) / Math.max(1, Math.round((end - start) / DAY) + 1)) : 0;
+  const tracking = !!end && !!start && daysLeft >= 0 && end > start;
   el.innerHTML = '<h2>Squad goals</h2>' + state.goals.map((g) => {
     // Colour by current rank so segments match the player cards below.
-    const parts = rows.map(({ p }, i) => ({ name: p.name, v: p.season?.[g.mode ?? 'overall']?.[g.metric] ?? 0, color: PLAYER_COLORS[i < 3 ? i : 3 + (i - 3) % 2] }));
+    const parts = rows.map(({ p }, i) => ({ name: p.name, v: p.season?.[g.mode ?? 'overall']?.[g.metric] ?? 0, color: PLAYER_COLORS[ci(p.name)] }));
     const total = parts.reduce((a, x) => a + x.v, 0);
     const pct = Math.min(100, (total / g.target) * 100);
     const expected = tracking ? Math.round(g.target * elapsed) : null;
@@ -515,19 +569,94 @@ function renderGoals(rows) {
     return `<div class="goal">
       <div class="goal-top"><b>${esc(g.label)}</b><span>${total.toLocaleString()} / ${g.target.toLocaleString()}</span></div>
       <div class="goal-track"><div class="goal-bar" role="img" aria-label="${pct.toFixed(0)}% of goal">${parts.filter((x) => x.v > 0).map((x) =>
-        `<i style="width:${(x.v / g.target) * 100}%;background:${x.color}" title="${esc(x.name)}: ${x.v}"></i>`).join('')}</div>
-      ${expected === null || total >= g.target ? '' : `<u class="goal-pace" style="left:${elapsed * 100}%" title="Where you should be today: ${expected}"></u>`}</div>
+        `<i style="width:${(x.v / g.target) * 100}%;background:${x.color}" data-tip="${esc(x.name)}: ${x.v}"></i>`).join('')}</div>
+      ${expected === null || total >= g.target ? '' : `<u class="goal-pace" style="left:${elapsed * 100}%" data-tip="Where you should be today: ${expected.toLocaleString()}"></u>`}</div>
       <small>${note}</small></div>`;
   }).join('');
 }
 
+// Records and streaks across all recorded history, from daily gains.
+const dayLabel = (k) => new Date(k + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+const dayNum = (k) => Date.parse(k + 'T00:00:00Z') / DAY;
+
+// Longest and latest run of consecutive calendar days in a sorted list of YYYY-MM-DD keys.
+function dayRuns(keys) {
+  let best = null, cur = null;
+  for (const k of keys) {
+    cur = cur && dayNum(k) - dayNum(cur.end) === 1 ? { ...cur, end: k, len: cur.len + 1 } : { start: k, end: k, len: 1 };
+    if (!best || cur.len > best.len) best = cur;
+  }
+  return { best, cur };
+}
+
+function computeRecords() {
+  const yest = new Date(Date.now() - DAY).toLocaleDateString('en-CA');
+  const recs = {}, rolls = [];
+  const consider = (key, v, who, when, live = false) => {
+    if (v > 0 && (!recs[key] || v > recs[key].v)) recs[key] = { v, ...who, when, live };
+  };
+  for (const p of state.data.players) {
+    const days = dailyGains(state.history[p.name] ?? []).filter((d) => d.matches > 0);
+    const who = { name: p.name, color: PLAYER_COLORS[ci(p.name)] };
+    for (const d of days) {
+      const when = dayLabel(d.day);
+      consider('kills', d.kills, who, when);
+      consider('wins', d.wins, who, when);
+      consider('matches', d.matches, who, when);
+      if (d.matches >= 5) consider('kpm', d.kills / d.matches, who, when);
+    }
+    for (const [key, keys] of [['play', days.map((d) => d.day)], ['win', days.filter((d) => d.wins > 0).map((d) => d.day)]]) {
+      const { best, cur } = dayRuns(keys);
+      if (!best) continue;
+      const when = best.len > 1 ? `${dayLabel(best.start)} – ${dayLabel(best.end)}` : dayLabel(best.start);
+      consider(key, best.len, who, when, best.end === cur.end && cur.end >= yest);
+      if (key === 'play' && cur.end >= yest && cur.len >= 2) rolls.push({ ...who, len: cur.len });
+    }
+  }
+  return { recs, rolls: rolls.sort((a, b) => b.len - a.len) };
+}
+
+function renderRecords() {
+  const el = document.getElementById('records');
+  const { recs, rolls } = computeRecords();
+  const defs = [
+    ['kills', 'Most kills in a day'], ['wins', 'Most wins in a day'], ['matches', 'Most matches in a day'],
+    ['kpm', 'Best day · kills per match (5+ games)', (v) => v.toFixed(2)],
+    ['play', 'Longest play streak · days in a row'], ['win', 'Longest win streak · days in a row with a win'],
+  ].filter(([k]) => recs[k]);
+  el.hidden = !defs.length;
+  if (el.hidden) return;
+  el.innerHTML = `<h2>Records &amp; streaks</h2>${defs.map(([k, label, fmt = (v) => v]) => {
+    const r = recs[k];
+    return `<div class="rec"><div class="rec-v">${fmt(r.v)}</div><div class="rec-l"><b>${label}</b>
+      <span><i class="dot" style="background:${r.color}"></i>${esc(r.name)} · ${r.when}${r.live ? ' <em class="badge live">Active</em>' : ''}</span></div></div>`;
+  }).join('')}
+    ${rolls.length ? `<h3>Playing streaks right now</h3><div class="rolls">${rolls.map((r) =>
+      `<span class="badge"><i class="dot" style="background:${r.color}"></i>${esc(r.name)} · ${r.len} days</span>`).join('')}</div>` : ''}
+    <p class="fine">Counted from stat snapshots, so a "day" is when stats were recorded. The stats API only reports totals, so game-by-game win streaks can't be tracked.</p>`;
+}
+
+const isActive = (s) => !!s && s.matches > 0;
+
+// Players with nothing to rank in the current view get a slim row instead of a card of zeros.
+function idleRow(p) {
+  const when = { week: 'this week', season: 'this season', lifetime: 'yet' }[state.window];
+  const mode = state.mode === 'overall' ? '' : MODES[state.mode].toLowerCase() + ' ';
+  const msg = p.error && !p.season ? 'No data yet' : `No ${mode}matches ${when}`;
+  return `<article class="player idle c${ci(p.name)}" data-name="${esc(p.name)}">
+    <div class="name">${esc(p.name)}</div>
+    ${p.error ? `<span class="badge err" data-tip="${esc('Could not refresh, showing last known stats · ' + p.error)}">stale</span>` : ''}
+    <div class="idle-msg">${msg}</div></article>`;
+}
+
 function render() {
+  hideTip();
   segment('view', VIEWS, 'view');
   const trendsView = state.view === 'trends';
   for (const id of ['window', 'mode', 'sort', 'summary', 'list']) document.getElementById(id).hidden = trendsView;
   if (trendsView) document.getElementById('goals').hidden = true;
-  if (trendsView) { renderActivity(); renderKpm(); renderBox(); renderScatter(); return; }
-  document.getElementById('activity').hidden = document.getElementById('kpm').hidden = document.getElementById('scatter').hidden = document.getElementById('box').hidden = true;
+  if (trendsView) { renderRecords(); renderActivity(); renderKpm(); renderBox(); renderScatter(); return; }
+  document.getElementById('records').hidden = document.getElementById('activity').hidden = document.getElementById('kpm').hidden = document.getElementById('scatter').hidden = document.getElementById('box').hidden = true;
   segment('window', WINDOWS, 'window');
   segment('mode', MODES, 'mode');
 
@@ -541,7 +670,7 @@ function render() {
 
   const rows = state.data.players
     .map((p) => ({ p, s: statsFor(p) }))
-    .sort((a, b) => (b.s?.[state.sort] ?? -1) - (a.s?.[state.sort] ?? -1));
+    .sort((a, b) => (isActive(b.s) - isActive(a.s)) || ((b.s?.[state.sort] ?? -1) - (a.s?.[state.sort] ?? -1)));
 
   renderGoals(rows);
   renderSummary(rows);
@@ -549,29 +678,32 @@ function render() {
   if (!rows.length) { list.innerHTML = '<div class="empty">No players yet. Add some to players.json.</div>'; return; }
 
   const [, sortLabel, sortFmt] = cols.find(([k]) => k === state.sort);
-  const max = Math.max(...rows.map(({ s }) => s?.[state.sort] ?? 0), 0);
+  const max = Math.max(...rows.filter(({ s }) => isActive(s)).map(({ s }) => s[state.sort] ?? 0), 0);
   const tiles = cols.filter(([k]) => k !== state.sort);
   const awards = computeAwards(rows);
 
-  list.innerHTML = rows.map(({ p, s }, i) => {
+  let rank = 0;
+  list.innerHTML = rows.map(({ p, s }) => {
+    if (!isActive(s)) return idleRow(p);
+    rank++;
     const mine = awards.get(p.name);
     const shown = mine.slice(0, MAX_AWARDS);
     const extra = mine.slice(MAX_AWARDS);
     const open = state.open.has(p.name);
     return `
-    <article class="player r${i < 3 ? i + 1 : 4 + (i - 3) % 2} ${open ? 'open' : ''}" data-name="${esc(p.name)}">
+    <article class="player c${ci(p.name)} ${open ? 'open' : ''}" data-name="${esc(p.name)}">
       <div class="head">
-        <div class="rank">${i + 1}</div>
+        <div class="rank">${rank}</div>
         <div class="who">
           <div class="name">${esc(p.name)}</div>
           <div class="meta">
             <span class="badge">${PLATFORM[p.accountType] ?? esc(p.accountType)}</span>
-            ${p.error ? `<span class="badge err" title="${esc(p.error)}">stale</span>` : ''}
+            ${p.error ? `<span class="badge err" data-tip="${esc('Could not refresh, showing last known stats · ' + p.error)}">stale</span>` : ''}
           </div>
         </div>
         <div class="hero"><b>${s ? sortFmt(s[state.sort]) : '–'}</b><small>${sortLabel}</small></div>
       </div>
-      ${mine.length ? `<div class="awards">${shown.map((a) => `<span class="badge award">★ ${a}</span>`).join('')}${extra.length ? `<span class="badge award" title="${esc(extra.join(', '))}">+${extra.length}</span>` : ''}</div>` : ''}
+      ${mine.length ? `<div class="awards">${shown.map((a) => `<span class="badge award">★ ${a}</span>`).join('')}${extra.length ? `<span class="badge award" data-tip="${esc(extra.join(', '))}">+${extra.length}</span>` : ''}</div>` : ''}
       <div class="bar"><i style="width:${max && s ? Math.max(2, (s[state.sort] / max) * 100) : 0}%"></i></div>
       <div class="tiles ${tiles.length === 4 ? 'n4' : ''}">${tiles.map(([k, label, fmt]) =>
         `<div class="tile"><b>${s ? fmt(s[k]) : '–'}</b><small>${label}</small></div>`).join('')}</div>
@@ -596,17 +728,47 @@ document.getElementById('list').addEventListener('click', (e) => {
   state.open[open ? 'add' : 'delete'](card.dataset.name);
 });
 
+// Tooltips: hover on desktop, tap on touch screens (title attributes don't work on phones).
+const tipEl = document.createElement('div');
+tipEl.id = 'tip'; tipEl.hidden = true; tipEl.setAttribute('role', 'tooltip');
+document.body.append(tipEl);
+let tipTarget = null;
+function hideTip() { tipTarget = null; tipEl.hidden = true; }
+function showTip(t) {
+  tipTarget = t;
+  tipEl.textContent = t.dataset.tip;
+  tipEl.style.left = tipEl.style.top = '0px';
+  tipEl.hidden = false;
+  const r = t.getBoundingClientRect(), w = tipEl.offsetWidth, h = tipEl.offsetHeight;
+  tipEl.style.left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, innerWidth - w - 8)) + 'px';
+  tipEl.style.top = (r.top - h - 8 >= 8 ? r.top - h - 8 : r.bottom + 8) + 'px';
+}
+const canHover = matchMedia('(hover: hover)').matches;
+document.addEventListener(canHover ? 'mouseover' : 'click', (e) => {
+  const t = e.target.closest?.('[data-tip]');
+  if (!t || (!canHover && t === tipTarget)) return hideTip();
+  showTip(t);
+});
+document.addEventListener('mouseout', (e) => { if (!e.relatedTarget) hideTip(); });
+addEventListener('scroll', hideTip, { passive: true });
+addEventListener('keydown', (e) => { if (e.key === 'Escape') hideTip(); });
+
+// Each player keeps one colour across the whole page, by their place in players.json.
+const ci = (name) => Math.max(0, state.data.players.findIndex((p) => p.name === name)) % PLAYER_COLORS.length;
+
 Promise.all([
   fetch('data/stats.json').then((r) => r.json()),
   fetch('data/history.json').then((r) => r.json()).catch(() => ({})),
   fetch('goals.json').then((r) => r.json()).catch(() => []),
-]).then(([data, history, goals]) => {
+  fetch('season.json').then((r) => r.json()).catch(() => ({})),
+]).then(([data, history, goals, season]) => {
   state.data = data;
   state.goals = goals;
   state.history = history;
-  document.getElementById('updated').textContent = data.updatedAt
-    ? 'Last updated: ' + new Date(data.updatedAt).toLocaleString()
-    : 'Waiting for the first update run.';
+  SEASON.start = seasonDate(season.start);
+  SEASON.end = seasonDate(season.end);
+  showFreshness();
+  setInterval(showFreshness, 6e4);
   showSeasonEnd();
   render();
 }).catch(() => { document.getElementById('updated').textContent = 'Could not load stats.'; });

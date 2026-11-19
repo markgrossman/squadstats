@@ -29,5 +29,8 @@ jobs:
           git config user.name "stats-bot"
           git config user.email "stats-bot@users.noreply.github.com"
           git add data
-          git diff --cached --quiet || git commit -m "Update stats"
+          git diff --cached --quiet && exit 0
+          git commit -m "Update stats"
+          # Someone may have pushed while this ran; rebase onto it instead of failing.
+          git pull --rebase --autostash origin main
           git push

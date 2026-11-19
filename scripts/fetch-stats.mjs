@@ -117,12 +117,25 @@ for (const player of players) {
   }
 }
 
-// Only touch stats.json when something changed, so cron runs don't create empty commits.
-const strip = (s) => JSON.stringify(s.players);
-if (strip(previous) !== JSON.stringify(out)) {
+// updatedAt = when the numbers last changed; checkedAt = when we last asked the API.
+// Only touch stats.json when something changed, or when the recorded check time is
+// getting old, so frequent cron runs don't create a commit every time.
+const CHECK_REFRESH_MS = 30 * 60 * 1000;
+const now = new Date();
+const changed = JSON.stringify(previous.players) !== JSON.stringify(out);
+const lastChecked = Date.parse(previous.checkedAt ?? previous.updatedAt ?? '') || 0;
+if (changed || now - lastChecked > CHECK_REFRESH_MS) {
   await writeFile(
     STATS_PATH,
-    JSON.stringify({ updatedAt: new Date().toISOString(), players: out }, null, 2) + '\n',
+    JSON.stringify(
+      {
+        updatedAt: changed ? now.toISOString() : previous.updatedAt ?? now.toISOString(),
+        checkedAt: now.toISOString(),
+        players: out,
+      },
+      null,
+      2,
+    ) + '\n',
   );
 }
 await writeFile(HISTORY_PATH, JSON.stringify(history, null, 1) + '\n');
