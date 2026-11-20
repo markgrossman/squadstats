@@ -5575,6 +5575,34 @@
      "deaths": 7727
     }
    }
+  },
+  {
+   "t": "2026-11-20T05:30:15.501Z",
+   "matches": 16309,
+   "wins": 1568,
+   "kills": 33153,
+   "deaths": 14741,
+   "minutesPlayed": 167608,
+   "modes": {
+    "solo": {
+     "matches": 916,
+     "wins": 17,
+     "kills": 953,
+     "deaths": 899
+    },
+    "duo": {
+     "matches": 4447,
+     "wins": 222,
+     "kills": 6152,
+     "deaths": 4225
+    },
+    "squad": {
+     "matches": 8892,
+     "wins": 1165,
+     "kills": 17549,
+     "deaths": 7727
+    }
+   }
   }
  ],
  "SirChawlz": [
