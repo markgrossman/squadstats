@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-20T05:00:21.379Z",
-  "checkedAt": "2026-11-20T05:00:21.379Z",
+  "updatedAt": "2026-11-20T05:20:23.259Z",
+  "checkedAt": "2026-11-20T05:20:23.259Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -98,13 +98,13 @@
       "lifetime": {
         "overall": {
           "wins": 1567,
-          "kills": 33140,
-          "deaths": 14740,
-          "matches": 16307,
+          "kills": 33143,
+          "deaths": 14741,
+          "matches": 16308,
           "kd": 2.248,
           "winRate": 9.609,
-          "minutesPlayed": 167584,
-          "score": 3895609
+          "minutesPlayed": 167594,
+          "score": 3895894
         },
         "solo": {
           "wins": 17,
@@ -128,25 +128,25 @@
         },
         "squad": {
           "wins": 1164,
-          "kills": 17536,
-          "deaths": 7726,
-          "matches": 8890,
+          "kills": 17539,
+          "deaths": 7727,
+          "matches": 8891,
           "kd": 2.27,
-          "winRate": 13.093,
-          "minutesPlayed": 86987,
-          "score": 2244644
+          "winRate": 13.092,
+          "minutesPlayed": 86997,
+          "score": 2244929
         }
       },
       "season": {
         "overall": {
           "wins": 28,
-          "kills": 463,
-          "deaths": 116,
-          "matches": 144,
-          "kd": 3.991,
-          "winRate": 19.444,
-          "minutesPlayed": 1639,
-          "score": 53542
+          "kills": 466,
+          "deaths": 117,
+          "matches": 145,
+          "kd": 3.983,
+          "winRate": 19.31,
+          "minutesPlayed": 1649,
+          "score": 53827
         },
         "solo": {
           "wins": 1,
@@ -170,13 +170,13 @@
         },
         "squad": {
           "wins": 19,
-          "kills": 260,
-          "deaths": 55,
-          "matches": 74,
-          "kd": 4.727,
-          "winRate": 25.676,
-          "minutesPlayed": 871,
-          "score": 29038
+          "kills": 263,
+          "deaths": 56,
+          "matches": 75,
+          "kd": 4.696,
+          "winRate": 25.333,
+          "minutesPlayed": 881,
+          "score": 29323
         }
       }
     },
