@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-19T18:00:22.277Z",
-  "checkedAt": "2026-11-20T01:40:25.414Z",
+  "updatedAt": "2026-11-20T02:10:20.920Z",
+  "checkedAt": "2026-11-20T02:10:20.920Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -94,27 +94,27 @@
     {
       "name": "Chopstix_02",
       "accountType": "psn",
-      "level": 90,
+      "level": 92,
       "lifetime": {
         "overall": {
           "wins": 1567,
-          "kills": 33135,
-          "deaths": 14738,
-          "matches": 16305,
+          "kills": 33136,
+          "deaths": 14739,
+          "matches": 16306,
           "kd": 2.248,
-          "winRate": 9.611,
-          "minutesPlayed": 167556,
-          "score": 3894760
+          "winRate": 9.61,
+          "minutesPlayed": 167572,
+          "score": 3895265
         },
         "solo": {
           "wins": 17,
-          "kills": 952,
-          "deaths": 898,
-          "matches": 915,
+          "kills": 953,
+          "deaths": 899,
+          "matches": 916,
           "kd": 1.06,
-          "winRate": 1.858,
-          "minutesPlayed": 5088,
-          "score": 133560
+          "winRate": 1.856,
+          "minutesPlayed": 5104,
+          "score": 134065
         },
         "duo": {
           "wins": 222,
@@ -140,23 +140,23 @@
       "season": {
         "overall": {
           "wins": 28,
-          "kills": 458,
-          "deaths": 114,
-          "matches": 142,
-          "kd": 4.018,
-          "winRate": 19.718,
-          "minutesPlayed": 1611,
-          "score": 52693
+          "kills": 459,
+          "deaths": 115,
+          "matches": 143,
+          "kd": 3.991,
+          "winRate": 19.58,
+          "minutesPlayed": 1627,
+          "score": 53198
         },
         "solo": {
           "wins": 1,
-          "kills": 47,
-          "deaths": 22,
-          "matches": 23,
-          "kd": 2.136,
-          "winRate": 4.348,
-          "minutesPlayed": 208,
-          "score": 6327
+          "kills": 48,
+          "deaths": 23,
+          "matches": 24,
+          "kd": 2.087,
+          "winRate": 4.167,
+          "minutesPlayed": 224,
+          "score": 6832
         },
         "duo": {
           "wins": 8,
