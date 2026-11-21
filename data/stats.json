@@ -1,31 +1,31 @@
 {
-  "updatedAt": "2026-11-21T00:10:22.668Z",
-  "checkedAt": "2026-11-21T00:10:22.668Z",
+  "updatedAt": "2026-11-21T00:20:27.167Z",
+  "checkedAt": "2026-11-21T00:20:27.167Z",
   "players": [
     {
       "name": "Quietkoala5",
       "accountType": "epic",
-      "level": 59,
+      "level": 62,
       "lifetime": {
         "overall": {
-          "wins": 316,
-          "kills": 3872,
+          "wins": 317,
+          "kills": 3882,
           "deaths": 900,
-          "matches": 1216,
-          "kd": 4.302,
-          "winRate": 25.987,
-          "minutesPlayed": 13805,
-          "score": 486118
+          "matches": 1217,
+          "kd": 4.313,
+          "winRate": 26.048,
+          "minutesPlayed": 13820,
+          "score": 486894
         },
         "solo": {
-          "wins": 45,
-          "kills": 1730,
+          "wins": 46,
+          "kills": 1740,
           "deaths": 305,
-          "matches": 350,
-          "kd": 5.672,
-          "winRate": 12.857,
-          "minutesPlayed": 3675,
-          "score": 128599
+          "matches": 351,
+          "kd": 5.705,
+          "winRate": 13.105,
+          "minutesPlayed": 3690,
+          "score": 129375
         },
         "duo": {
           "wins": 56,

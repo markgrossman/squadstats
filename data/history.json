@@ -1291,6 +1291,34 @@
      "deaths": 335
     }
    }
+  },
+  {
+   "t": "2026-11-21T00:20:17.689Z",
+   "matches": 1217,
+   "wins": 317,
+   "kills": 3882,
+   "deaths": 900,
+   "minutesPlayed": 13820,
+   "modes": {
+    "solo": {
+     "matches": 351,
+     "wins": 46,
+     "kills": 1740,
+     "deaths": 305
+    },
+    "duo": {
+     "matches": 244,
+     "wins": 56,
+     "kills": 545,
+     "deaths": 188
+    },
+    "squad": {
+     "matches": 492,
+     "wins": 157,
+     "kills": 950,
+     "deaths": 335
+    }
+   }
   }
  ],
  "Kaiser2007": [
