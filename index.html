@@ -110,6 +110,18 @@
   .goal-bar i { display:block; height:100%; border-right:2px solid var(--white); }
   .goal-bar i:last-child { border-right:0; }
   .goal small { font:700 .75rem var(--display); text-transform:uppercase; letter-spacing:.04em; opacity:.65; }
+  /* Reached goals: gold card, glowing shimmering bar, trophy banner. */
+  .goal.done { margin-left:-8px; margin-right:-8px; padding:10px 8px 8px; border-radius:20px; background:linear-gradient(135deg,#fff3c4,#f7c948); box-shadow:0 0 0 2px #e0a800, 0 4px 18px rgba(224,168,0,.45); }
+  .goal.done .goal-top span { background:var(--ink); color:var(--yellow); padding:3px 10px; border-radius:999px; font-size:1.25rem; }
+  .goal.done .goal-bar { position:relative; box-shadow:0 0 10px rgba(224,168,0,.8); background:rgba(0,0,0,.18); }
+  .goal.done .goal-bar::after { content:''; position:absolute; inset:0; background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%); transform:translateX(-100%); animation:goal-shine 2.6s ease-in-out infinite; }
+  .goal.done small { display:block; opacity:1; font-size:.95rem; font-weight:800; }
+  .goal.done small .trophy { display:inline-block; animation:goal-pop .9s ease-out; }
+  @keyframes goal-shine { 0%,35% { transform:translateX(-100%); } 100% { transform:translateX(100%); } }
+  @keyframes goal-pop { 0% { transform:scale(0) rotate(-30deg); } 60% { transform:scale(1.5) rotate(10deg); } 100% { transform:scale(1) rotate(0); } }
+  .confetti { position:fixed; top:-12px; z-index:20; width:9px; height:14px; pointer-events:none; animation:confetti-fall linear forwards; }
+  @keyframes confetti-fall { to { transform:translate(var(--dx),105vh) rotate(var(--rot)); opacity:.9; } }
+  @media (prefers-reduced-motion:reduce) { .goal.done .goal-bar::after, .goal.done small .trophy { animation:none; } }
   .totals { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; text-align:center; }
   .totals b { display:block; font:800 2.2rem/.95 var(--display); font-variant-numeric:tabular-nums; }
   .totals small { font:700 .8rem var(--display); text-transform:uppercase; letter-spacing:.06em; opacity:.6; }
@@ -564,15 +576,34 @@ function renderGoals(rows) {
     const diff = expected === null ? 0 : total - expected;
     const pace = expected === null || total >= g.target ? ''
       : ` · ${Math.abs(diff) < 1 ? 'on pace' : diff > 0 ? diff.toLocaleString() + ' ahead' : Math.abs(diff).toLocaleString() + ' behind'} (target ${expected.toLocaleString()})`;
-    const note = total >= g.target ? 'Goal reached 🎉'
+    const note = total >= g.target ? `<span class="trophy">🏆</span> Goal crushed${total > g.target ? ` · ${(total - g.target).toLocaleString()} over` : ''} 🎉`
       : `${(g.target - total).toLocaleString()} to go${daysLeft > 0 ? ` · ${daysLeft} days left` : ''}${pace}`;
-    return `<div class="goal">
+    return `<div class="goal${total >= g.target ? ' done' : ''}" data-goal="${esc(g.metric + ':' + g.target)}">
       <div class="goal-top"><b>${esc(g.label)}</b><span>${total.toLocaleString()} / ${g.target.toLocaleString()}</span></div>
       <div class="goal-track"><div class="goal-bar" role="img" aria-label="${pct.toFixed(0)}% of goal">${parts.filter((x) => x.v > 0).map((x) =>
         `<i style="width:${(x.v / g.target) * 100}%;background:${x.color}" data-tip="${esc(x.name)}: ${x.v}"></i>`).join('')}</div>
       ${expected === null || total >= g.target ? '' : `<u class="goal-pace" style="left:${elapsed * 100}%" data-tip="Where you should be today: ${expected.toLocaleString()}"></u>`}</div>
       <small>${note}</small></div>`;
   }).join('');
+  // Celebrate each newly reached goal once per browser, not on every re-render.
+  const fresh = [...el.querySelectorAll('.goal.done')].filter((d) => {
+    const key = 'goalCelebrated:' + d.dataset.goal;
+    try { if (localStorage.getItem(key)) return false; localStorage.setItem(key, '1'); } catch {}
+    return true;
+  });
+  if (fresh.length) confetti();
+}
+
+function confetti() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const colors = [PLAYER_COLORS, ['#f7c948', '#f6806a', '#7470f4', '#5fc9e8', '#f58fc2']].flat();
+  for (let i = 0; i < 120; i++) {
+    const c = document.createElement('i');
+    c.className = 'confetti';
+    c.style.cssText = `left:${Math.random() * 100}vw;background:${colors[i % colors.length]};--dx:${(Math.random() - .5) * 240}px;--rot:${Math.random() * 1080 - 540}deg;animation-duration:${2.2 + Math.random() * 2}s;animation-delay:${Math.random() * .6}s;border-radius:${i % 3 ? '2px' : '50%'}`;
+    document.body.appendChild(c);
+    c.addEventListener('animationend', () => c.remove());
+  }
 }
 
 // Records and streaks across all recorded history, from daily gains.
