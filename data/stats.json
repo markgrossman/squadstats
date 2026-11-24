@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-24T01:00:22.713Z",
-  "checkedAt": "2026-11-24T01:00:22.713Z",
+  "updatedAt": "2026-11-24T01:20:19.527Z",
+  "checkedAt": "2026-11-24T01:20:19.527Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -187,23 +187,23 @@
       "lifetime": {
         "overall": {
           "wins": 1609,
-          "kills": 30244,
-          "deaths": 13859,
-          "matches": 15468,
+          "kills": 30245,
+          "deaths": 13860,
+          "matches": 15469,
           "kd": 2.182,
-          "winRate": 10.402,
-          "minutesPlayed": 136119,
-          "score": 3524525
+          "winRate": 10.401,
+          "minutesPlayed": 136123,
+          "score": 3524638
         },
         "solo": {
           "wins": 37,
-          "kills": 1746,
-          "deaths": 1252,
-          "matches": 1289,
-          "kd": 1.395,
-          "winRate": 2.87,
-          "minutesPlayed": 8197,
-          "score": 212814
+          "kills": 1747,
+          "deaths": 1253,
+          "matches": 1290,
+          "kd": 1.394,
+          "winRate": 2.868,
+          "minutesPlayed": 8201,
+          "score": 212927
         },
         "duo": {
           "wins": 232,
@@ -229,23 +229,23 @@
       "season": {
         "overall": {
           "wins": 39,
-          "kills": 483,
-          "deaths": 151,
-          "matches": 190,
-          "kd": 3.199,
-          "winRate": 20.526,
-          "minutesPlayed": 2209,
-          "score": 70848
+          "kills": 484,
+          "deaths": 152,
+          "matches": 191,
+          "kd": 3.184,
+          "winRate": 20.419,
+          "minutesPlayed": 2213,
+          "score": 70961
         },
         "solo": {
           "wins": 1,
-          "kills": 40,
-          "deaths": 20,
-          "matches": 21,
-          "kd": 2,
-          "winRate": 4.762,
-          "minutesPlayed": 174,
-          "score": 5230
+          "kills": 41,
+          "deaths": 21,
+          "matches": 22,
+          "kd": 1.952,
+          "winRate": 4.545,
+          "minutesPlayed": 178,
+          "score": 5343
         },
         "duo": {
           "wins": 8,
