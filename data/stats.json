@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-25T00:20:25.499Z",
-  "checkedAt": "2026-11-25T00:20:25.499Z",
+  "updatedAt": "2026-11-25T00:40:19.734Z",
+  "checkedAt": "2026-11-25T00:40:19.734Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -188,12 +188,12 @@
         "overall": {
           "wins": 1612,
           "kills": 30283,
-          "deaths": 13870,
-          "matches": 15482,
+          "deaths": 13871,
+          "matches": 15483,
           "kd": 2.183,
-          "winRate": 10.412,
-          "minutesPlayed": 136283,
-          "score": 3530075
+          "winRate": 10.411,
+          "minutesPlayed": 136297,
+          "score": 3530411
         },
         "solo": {
           "wins": 37,
@@ -218,24 +218,24 @@
         "squad": {
           "wins": 1073,
           "kills": 17974,
-          "deaths": 7231,
-          "matches": 8304,
-          "kd": 2.486,
-          "winRate": 12.921,
-          "minutesPlayed": 79468,
-          "score": 2056179
+          "deaths": 7232,
+          "matches": 8305,
+          "kd": 2.485,
+          "winRate": 12.92,
+          "minutesPlayed": 79482,
+          "score": 2056515
         }
       },
       "season": {
         "overall": {
           "wins": 42,
           "kills": 522,
-          "deaths": 162,
-          "matches": 204,
-          "kd": 3.222,
-          "winRate": 20.588,
-          "minutesPlayed": 2373,
-          "score": 76398
+          "deaths": 163,
+          "matches": 205,
+          "kd": 3.202,
+          "winRate": 20.488,
+          "minutesPlayed": 2387,
+          "score": 76734
         },
         "solo": {
           "wins": 1,
@@ -260,12 +260,12 @@
         "squad": {
           "wins": 33,
           "kills": 334,
-          "deaths": 84,
-          "matches": 117,
-          "kd": 3.976,
-          "winRate": 28.205,
-          "minutesPlayed": 1450,
-          "score": 48052
+          "deaths": 85,
+          "matches": 118,
+          "kd": 3.929,
+          "winRate": 27.966,
+          "minutesPlayed": 1464,
+          "score": 48388
         }
       }
     },
