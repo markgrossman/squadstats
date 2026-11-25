@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-25T01:20:20.244Z",
-  "checkedAt": "2026-11-25T01:20:20.244Z",
+  "updatedAt": "2026-11-25T01:40:20.956Z",
+  "checkedAt": "2026-11-25T01:40:20.956Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -99,12 +99,12 @@
         "overall": {
           "wins": 1569,
           "kills": 33192,
-          "deaths": 14754,
-          "matches": 16323,
-          "kd": 2.25,
-          "winRate": 9.612,
-          "minutesPlayed": 167754,
-          "score": 3901199
+          "deaths": 14756,
+          "matches": 16325,
+          "kd": 2.249,
+          "winRate": 9.611,
+          "minutesPlayed": 167766,
+          "score": 3901504
         },
         "solo": {
           "wins": 17,
@@ -129,24 +129,24 @@
         "squad": {
           "wins": 1166,
           "kills": 17561,
-          "deaths": 7731,
-          "matches": 8897,
-          "kd": 2.272,
-          "winRate": 13.106,
-          "minutesPlayed": 87059,
-          "score": 2247284
+          "deaths": 7733,
+          "matches": 8899,
+          "kd": 2.271,
+          "winRate": 13.103,
+          "minutesPlayed": 87071,
+          "score": 2247589
         }
       },
       "season": {
         "overall": {
           "wins": 30,
           "kills": 515,
-          "deaths": 130,
-          "matches": 160,
-          "kd": 3.962,
-          "winRate": 18.75,
-          "minutesPlayed": 1809,
-          "score": 59132
+          "deaths": 132,
+          "matches": 162,
+          "kd": 3.902,
+          "winRate": 18.519,
+          "minutesPlayed": 1821,
+          "score": 59437
         },
         "solo": {
           "wins": 1,
@@ -171,12 +171,12 @@
         "squad": {
           "wins": 21,
           "kills": 285,
-          "deaths": 60,
-          "matches": 81,
-          "kd": 4.75,
-          "winRate": 25.926,
-          "minutesPlayed": 943,
-          "score": 31678
+          "deaths": 62,
+          "matches": 83,
+          "kd": 4.597,
+          "winRate": 25.301,
+          "minutesPlayed": 955,
+          "score": 31983
         }
       }
     },
@@ -187,13 +187,13 @@
       "lifetime": {
         "overall": {
           "wins": 1613,
-          "kills": 30298,
-          "deaths": 13872,
-          "matches": 15485,
+          "kills": 30303,
+          "deaths": 13874,
+          "matches": 15487,
           "kd": 2.184,
-          "winRate": 10.417,
-          "minutesPlayed": 136328,
-          "score": 3531564
+          "winRate": 10.415,
+          "minutesPlayed": 136342,
+          "score": 3531943
         },
         "solo": {
           "wins": 37,
@@ -217,25 +217,25 @@
         },
         "squad": {
           "wins": 1074,
-          "kills": 17989,
-          "deaths": 7233,
-          "matches": 8307,
+          "kills": 17994,
+          "deaths": 7235,
+          "matches": 8309,
           "kd": 2.487,
-          "winRate": 12.929,
-          "minutesPlayed": 79513,
-          "score": 2057668
+          "winRate": 12.926,
+          "minutesPlayed": 79527,
+          "score": 2058047
         }
       },
       "season": {
         "overall": {
           "wins": 43,
-          "kills": 537,
-          "deaths": 164,
-          "matches": 207,
-          "kd": 3.274,
-          "winRate": 20.773,
-          "minutesPlayed": 2418,
-          "score": 77887
+          "kills": 542,
+          "deaths": 166,
+          "matches": 209,
+          "kd": 3.265,
+          "winRate": 20.574,
+          "minutesPlayed": 2432,
+          "score": 78266
         },
         "solo": {
           "wins": 1,
@@ -259,13 +259,13 @@
         },
         "squad": {
           "wins": 34,
-          "kills": 349,
-          "deaths": 86,
-          "matches": 120,
-          "kd": 4.058,
-          "winRate": 28.333,
-          "minutesPlayed": 1495,
-          "score": 49541
+          "kills": 354,
+          "deaths": 88,
+          "matches": 122,
+          "kd": 4.023,
+          "winRate": 27.869,
+          "minutesPlayed": 1509,
+          "score": 49920
         }
       }
     },
