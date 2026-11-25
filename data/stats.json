@@ -1,31 +1,31 @@
 {
-  "updatedAt": "2026-11-25T03:50:20.942Z",
-  "checkedAt": "2026-11-25T03:50:20.942Z",
+  "updatedAt": "2026-11-25T04:10:30.435Z",
+  "checkedAt": "2026-11-25T04:10:30.435Z",
   "players": [
     {
       "name": "Quietkoala5",
       "accountType": "epic",
-      "level": 67,
+      "level": 69,
       "lifetime": {
         "overall": {
-          "wins": 319,
-          "kills": 3896,
-          "deaths": 902,
-          "matches": 1221,
-          "kd": 4.319,
-          "winRate": 26.126,
-          "minutesPlayed": 13868,
-          "score": 488906
+          "wins": 320,
+          "kills": 3910,
+          "deaths": 903,
+          "matches": 1223,
+          "kd": 4.33,
+          "winRate": 26.165,
+          "minutesPlayed": 13886,
+          "score": 489818
         },
         "solo": {
-          "wins": 46,
-          "kills": 1748,
-          "deaths": 307,
-          "matches": 353,
-          "kd": 5.694,
-          "winRate": 13.031,
-          "minutesPlayed": 3708,
-          "score": 130092
+          "wins": 47,
+          "kills": 1762,
+          "deaths": 308,
+          "matches": 355,
+          "kd": 5.721,
+          "winRate": 13.239,
+          "minutesPlayed": 3726,
+          "score": 131004
         },
         "duo": {
           "wins": 58,
@@ -50,24 +50,24 @@
       },
       "season": {
         "overall": {
-          "wins": 24,
-          "kills": 263,
-          "deaths": 87,
-          "matches": 111,
-          "kd": 3.023,
-          "winRate": 21.622,
-          "minutesPlayed": 1204,
-          "score": 41180
+          "wins": 25,
+          "kills": 277,
+          "deaths": 88,
+          "matches": 113,
+          "kd": 3.148,
+          "winRate": 22.124,
+          "minutesPlayed": 1222,
+          "score": 42092
         },
         "solo": {
-          "wins": 2,
-          "kills": 80,
-          "deaths": 15,
-          "matches": 17,
-          "kd": 5.333,
-          "winRate": 11.765,
-          "minutesPlayed": 164,
-          "score": 6302
+          "wins": 3,
+          "kills": 94,
+          "deaths": 16,
+          "matches": 19,
+          "kd": 5.875,
+          "winRate": 15.789,
+          "minutesPlayed": 182,
+          "score": 7214
         },
         "duo": {
           "wins": 7,
