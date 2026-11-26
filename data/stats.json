@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-26T14:20:17.475Z",
-  "checkedAt": "2026-11-26T14:20:17.475Z",
+  "updatedAt": "2026-11-26T14:30:11.594Z",
+  "checkedAt": "2026-11-26T14:30:11.594Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -280,7 +280,7 @@
     {
       "name": "cool_story_dawg",
       "accountType": "psn",
-      "error": "503 the api is currently booting up, this could take up to a few minutes (usually just 20 seconds)"
+      "error": "429 the maximum allowed requests are 3 per 1s. try again in 1 second(s)."
     }
   ]
 }
