@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-28T12:50:45.236Z",
-  "checkedAt": "2026-11-28T12:50:45.236Z",
+  "updatedAt": "2026-11-28T13:01:02.616Z",
+  "checkedAt": "2026-11-28T13:01:02.616Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -89,7 +89,8 @@
           "minutesPlayed": 726,
           "score": 23889
         }
-      }
+      },
+      "error": "500 failed to fetch the requested stats (0)"
     },
     {
       "name": "chop_stix02",
@@ -183,8 +184,7 @@
           "minutesPlayed": 1553,
           "score": 51411
         }
-      },
-      "error": "500 failed to fetch the requested stats (504)"
+      }
     },
     {
       "name": "SirChawlz",
@@ -276,93 +276,9 @@
       }
     },
     {
-      "name": "CoolStoryDawg",
+      "name": "cool_story_dawg",
       "accountType": "psn",
-      "level": 40,
-      "lifetime": {
-        "overall": {
-          "wins": 507,
-          "kills": 9724,
-          "deaths": 7140,
-          "matches": 7647,
-          "kd": 1.362,
-          "winRate": 6.63,
-          "minutesPlayed": 44271,
-          "score": 1145155
-        },
-        "solo": {
-          "wins": 23,
-          "kills": 1761,
-          "deaths": 1273,
-          "matches": 1296,
-          "kd": 1.383,
-          "winRate": 1.775,
-          "minutesPlayed": 6590,
-          "score": 162477
-        },
-        "duo": {
-          "wins": 92,
-          "kills": 2482,
-          "deaths": 1764,
-          "matches": 1856,
-          "kd": 1.407,
-          "winRate": 4.957,
-          "minutesPlayed": 11988,
-          "score": 305315
-        },
-        "squad": {
-          "wins": 315,
-          "kills": 4512,
-          "deaths": 3650,
-          "matches": 3965,
-          "kd": 1.236,
-          "winRate": 7.945,
-          "minutesPlayed": 21397,
-          "score": 554662
-        }
-      },
-      "season": {
-        "overall": {
-          "wins": 12,
-          "kills": 116,
-          "deaths": 52,
-          "matches": 64,
-          "kd": 2.231,
-          "winRate": 18.75,
-          "minutesPlayed": 751,
-          "score": 23222
-        },
-        "solo": {
-          "wins": 0,
-          "kills": 5,
-          "deaths": 3,
-          "matches": 3,
-          "kd": 1.667,
-          "winRate": 0,
-          "minutesPlayed": 37,
-          "score": 1119
-        },
-        "duo": {
-          "wins": 3,
-          "kills": 51,
-          "deaths": 25,
-          "matches": 28,
-          "kd": 2.04,
-          "winRate": 10.714,
-          "minutesPlayed": 314,
-          "score": 9462
-        },
-        "squad": {
-          "wins": 9,
-          "kills": 60,
-          "deaths": 24,
-          "matches": 33,
-          "kd": 2.5,
-          "winRate": 27.273,
-          "minutesPlayed": 400,
-          "score": 12641
-        }
-      }
+      "error": "500 failed to fetch the requested stats (0)"
     }
   ]
 }
