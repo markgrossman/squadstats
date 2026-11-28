@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-28T12:00:31.670Z",
-  "checkedAt": "2026-11-28T12:00:31.670Z",
+  "updatedAt": "2026-11-28T12:10:52.007Z",
+  "checkedAt": "2026-11-28T12:10:52.007Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -89,8 +89,7 @@
           "minutesPlayed": 726,
           "score": 23889
         }
-      },
-      "error": "500 failed to fetch the requested stats (504)"
+      }
     },
     {
       "name": "chop_stix02",
@@ -184,7 +183,8 @@
           "minutesPlayed": 1553,
           "score": 51411
         }
-      }
+      },
+      "error": "500 failed to fetch the requested stats (504)"
     },
     {
       "name": "SirChawlz",
@@ -273,7 +273,8 @@
           "minutesPlayed": 0,
           "score": 0
         }
-      }
+      },
+      "error": "500 failed to fetch the requested stats (504)"
     },
     {
       "name": "CoolStoryDawg",
