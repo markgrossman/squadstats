@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-28T00:51:07.467Z",
-  "checkedAt": "2026-11-28T00:51:07.467Z",
+  "updatedAt": "2026-11-28T01:00:21.486Z",
+  "checkedAt": "2026-11-28T01:00:21.486Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -267,8 +267,7 @@
           "minutesPlayed": 1553,
           "score": 51411
         }
-      },
-      "error": "500 failed to fetch the requested stats (0)"
+      }
     },
     {
       "name": "SirChawlz",
