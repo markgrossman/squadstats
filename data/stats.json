@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-28T12:31:08.431Z",
-  "checkedAt": "2026-11-28T12:31:08.431Z",
+  "updatedAt": "2026-11-28T12:40:53.986Z",
+  "checkedAt": "2026-11-28T12:40:53.986Z",
   "players": [
     {
       "name": "Quietkoala5",
@@ -89,12 +89,13 @@
           "minutesPlayed": 726,
           "score": 23889
         }
-      }
+      },
+      "error": "500 failed to fetch the requested stats (504)"
     },
     {
       "name": "chop_stix02",
       "accountType": "psn",
-      "error": "500 failed to fetch the requested stats (0)"
+      "error": "500 failed to fetch the requested stats (504)"
     },
     {
       "name": "Kaiser2007",
@@ -183,8 +184,7 @@
           "minutesPlayed": 1553,
           "score": 51411
         }
-      },
-      "error": "500 failed to fetch the requested stats (502)"
+      }
     },
     {
       "name": "SirChawlz",
@@ -273,7 +273,8 @@
           "minutesPlayed": 0,
           "score": 0
         }
-      }
+      },
+      "error": "500 failed to fetch the requested stats (0)"
     },
     {
       "name": "CoolStoryDawg",
